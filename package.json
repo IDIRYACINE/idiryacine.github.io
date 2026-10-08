@@ -48,9 +48,6 @@
   "overrides": {
     "tar": "^7.5.22",
     "toml": "^4.2.0",
-    "estree-util-value-to-estree": "^3.3.3",
-    "vite@5.4.21": {
-      "esbuild": "^0.25.0"
-    }
+    "estree-util-value-to-estree": "^3.3.3"
   }
 }
