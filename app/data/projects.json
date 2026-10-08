@@ -148,7 +148,9 @@
             "outcomes": [
                 "Hackathon entry"
             ],
-            "actions": {}
+            "actions": {
+                "github": "https://github.com/IDIRYACINE/death-note-hackathon"
+            }
         },
         {
             "slug": "agritech",
