@@ -32,6 +32,10 @@ export function SectionIntro({
       <Transition in={sectionVisible || focused} timeout={0}>
         {({ visible, nodeRef }) => (
           <div className={styles.content} ref={nodeRef}>
+            <span aria-hidden className={styles.slashes} data-visible={visible}>
+              <span className={styles.cut} />
+              <span className={styles.cut} />
+            </span>
             <div aria-hidden className={styles.tag}>
               <Divider
                 notchWidth="64px"

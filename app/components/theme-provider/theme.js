@@ -107,29 +107,30 @@ const tokensMobileSmall = {
 };
 
 // Tokens that change based on theme
+// Malevolent Shrine: soot black with a blood undertone, crimson and bone
 const dark = {
-  background: 'oklch(17.76% 0 0)',
-  backgroundLight: 'oklch(21.78% 0 0)',
-  // Cursed energy violet
-  primary: 'oklch(74% 0.19 300)',
-  accent: 'oklch(74% 0.19 300)',
-  error: 'oklch(65.91% 0.249 13.76)',
-  text: 'var(--white)',
+  background: 'oklch(14.5% 0.012 20)',
+  backgroundLight: 'oklch(19% 0.018 20)',
+  primary: 'oklch(60% 0.215 27)',
+  accent: 'oklch(60% 0.215 27)',
+  error: 'oklch(70% 0.17 60)',
+  text: 'oklch(93% 0.018 80)',
   textTitle: 'var(--text)',
   textBody: 'color-mix(in lab, var(--text) 80%, transparent)',
   textLight: 'color-mix(in lab, var(--text) 60%, transparent)',
 };
 
+// Shrine paper with crimson and ink
 const light = {
-  background: 'oklch(96.12% 0 0)',
-  backgroundLight: 'var(--white)',
-  primary: 'var(--black)',
-  accent: 'oklch(56% 0.25 300)',
-  error: 'oklch(63.17% 0.259 25.41)',
-  text: 'var(--black)',
-  textTitle: 'color-mix(in lab, var(--text) 90%, transparent)',
-  textBody: 'color-mix(in lab, var(--text) 75%, transparent)',
-  textLight: 'color-mix(in lab, var(--text) 55%, transparent)',
+  background: 'oklch(93.5% 0.018 80)',
+  backgroundLight: 'oklch(96.5% 0.012 80)',
+  primary: 'oklch(22% 0.02 20)',
+  accent: 'oklch(50% 0.2 27)',
+  error: 'oklch(50% 0.2 27)',
+  text: 'oklch(18% 0.015 20)',
+  textTitle: 'color-mix(in lab, var(--text) 92%, transparent)',
+  textBody: 'color-mix(in lab, var(--text) 78%, transparent)',
+  textLight: 'color-mix(in lab, var(--text) 58%, transparent)',
 };
 
 export const tokens = {

@@ -15,8 +15,8 @@ DESIGN
 Based on the open source portfolio by Hamish Williams
 github.com/HamishMW/portfolio
 
-Fan theme inspired by Jujutsu Kaisen: cursed energy violet,
-領域展開 (Domain Expansion) and 特級呪術師 (Special Grade Sorcerer)
+Fan theme inspired by Jujutsu Kaisen: Malevolent Shrine (伏魔御廚子),
+領域展開 (Domain Expansion), 解 Dismantle and 捌 Cleave
 
 _______________________________________________________________________________
 

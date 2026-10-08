@@ -5,16 +5,15 @@ import { delay } from '~/utils/delay';
 import { classes } from '~/utils/style';
 import styles from './decoder-text.module.css';
 
-// Cursed technique kanji the text decodes through
+// Kanji from the Malevolent Shrine the text decodes through
 // prettier-ignore
 const glyphs = [
-  '呪', '術', '式', '領', '域',
-  '展', '開', '力', '廻', '戦',
-  '虚', '紫', '蒼', '赫', '縛',
-  '祓', '特', '級', '結', '界',
-  '帳', '印', '黒', '閃', '無',
-  '量', '空', '処', '反', '転',
-  '宿', '儺', '獄', '門', '彊',
+  '伏', '魔', '御', '廚', '子',
+  '領', '域', '展', '開', '解',
+  '捌', '竈', '宿', '儺', '呪',
+  '術', '式', '縛', '誓', '斬',
+  '血', '骨', '獄', '門', '鬼',
+  '神', '祟', '禍', '刃', '赫',
 ];
 
 const CharType = {
