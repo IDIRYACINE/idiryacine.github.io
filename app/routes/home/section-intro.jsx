@@ -6,7 +6,15 @@ import { Transition } from '~/components/transition';
 import { useState } from 'react';
 import styles from './section-intro.module.css';
 
-export function SectionIntro({ id, sectionRef, visible: sectionVisible, label, title, description }) {
+export function SectionIntro({
+  id,
+  sectionRef,
+  visible: sectionVisible,
+  label,
+  kanji,
+  title,
+  description,
+}) {
   const [focused, setFocused] = useState(false);
   const titleId = `${id}-title`;
 
@@ -33,6 +41,7 @@ export function SectionIntro({ id, sectionRef, visible: sectionVisible, label, t
               />
               <span className={styles.tagText} data-visible={visible}>
                 {label}
+                {kanji && <span className={styles.kanji}>{kanji}</span>}
               </span>
             </div>
             <Heading

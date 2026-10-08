@@ -51,6 +51,13 @@
   }
 }
 
+.kanji {
+  margin-left: var(--spaceM);
+  padding-left: var(--spaceM);
+  border-left: 1px solid color-mix(in lab, var(--primary) 50%, transparent);
+  letter-spacing: 0.3em;
+}
+
 .title,
 .description {
   max-width: 720px;
