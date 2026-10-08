@@ -12,7 +12,9 @@
                 "3-engineer team",
                 "Bebop redesign co-led"
             ],
-            "actions": {},
+            "actions": {
+                "website": "https://mybebop.fr"
+            },
             "grade": "特級"
         },
         {
@@ -27,7 +29,9 @@
                 "2 apps on the Play Store",
                 "Legal-entity isolation"
             ],
-            "actions": {},
+            "actions": {
+                "playstore": "https://play.google.com/store/apps/dev?id=4999982593960140954&hl=en"
+            },
             "grade": "特級"
         },
         {
@@ -58,7 +62,9 @@
                 "2 apps on the Play Store",
                 "Instant-feeling UI"
             ],
-            "actions": {},
+            "actions": {
+                "playstore": "https://play.google.com/store/apps/details?id=com.hader.pharma&hl=en"
+            },
             "grade": "一級"
         },
         {
