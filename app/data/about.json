@@ -1,8 +1,16 @@
 {
     "outcomes": [
         {
+            "value": "8",
+            "label": "Engineers led: 3 at Infraxcode, 5 as Hader co-founder"
+        },
+        {
             "value": "3",
-            "label": "Engineers led, reporting directly to the CTO"
+            "label": "Projects led and delivered at Ibdapro, incl. a government-grade platform"
+        },
+        {
+            "value": "3",
+            "label": "Client projects delivered as a consultant: AnFashion, Zawya, Dive Club"
         },
         {
             "value": "6",

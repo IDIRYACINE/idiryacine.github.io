@@ -67,6 +67,9 @@ const sideProjectsSection = {
 // Side projects are ready but hidden until there's more to show
 const showSideProjects = false;
 
+// Only the first render of the home page after a document load should reset scroll
+let hasLanded = false;
+
 function getProjects(category) {
   return projects.filter(project => project.category === category);
 }
@@ -105,6 +108,25 @@ export const Home = () => {
   };
 
   const isVisible = key => visibleSections.includes(sectionRefs.current[key]);
+
+  // A fresh page load (including refresh) always lands on the intro, instead of
+  // the browser restoring the last scroll position or jumping to a stale hash
+  useEffect(() => {
+    if (hasLanded) return;
+    hasLanded = true;
+
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    if (window.location.hash) {
+      window.history.replaceState(window.history.state, '', window.location.pathname);
+    }
+
+    // Wait a frame so this runs after Remix's ScrollRestoration has restored
+    const frame = requestAnimationFrame(() => window.scrollTo(0, 0));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   useEffect(() => {
     const sectionObserver = new IntersectionObserver(

@@ -36,6 +36,47 @@ export const Navbar = () => {
     scrollToHash(target, () => setTarget(null));
   }, [location.pathname, scrollToHash, target]);
 
+  // Highlight the nav item for the section currently in view
+  useEffect(() => {
+    if (location.pathname !== '/') return;
+
+    const sectionHashes = navLinks
+      .map(({ pathname }) => pathname.split('#')[1])
+      .filter(Boolean);
+
+    let frame;
+
+    const updateCurrent = () => {
+      // Let click-triggered smooth scrolls set the item themselves
+      if (target) return;
+
+      const threshold = window.innerHeight * 0.4;
+      let active;
+
+      for (const hash of sectionHashes) {
+        const element = document.getElementById(hash);
+        if (element && element.getBoundingClientRect().top <= threshold) {
+          active = hash;
+        }
+      }
+
+      setCurrent(active ? `/#${active}` : '/');
+    };
+
+    const handleScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(updateCurrent);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    updateCurrent();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, [location.pathname, target]);
+
   // Handle swapping the theme when intersecting with inverse themed elements
   useEffect(() => {
     const navItems = document.querySelectorAll('[data-navbar-item]');
