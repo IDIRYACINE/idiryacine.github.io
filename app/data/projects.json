@@ -12,7 +12,8 @@
                 "3-engineer team",
                 "Bebop redesign co-led"
             ],
-            "actions": {}
+            "actions": {},
+            "grade": "特級"
         },
         {
             "slug": "ibdapro",
@@ -26,7 +27,8 @@
                 "2 apps on the Play Store",
                 "Legal-entity isolation"
             ],
-            "actions": {}
+            "actions": {},
+            "grade": "特級"
         },
         {
             "slug": "anfashion",
@@ -41,7 +43,8 @@
             ],
             "actions": {
                 "website": "https://www.anfashion.dz"
-            }
+            },
+            "grade": "一級"
         },
         {
             "slug": "hader",
@@ -55,7 +58,8 @@
                 "2 apps on the Play Store",
                 "Instant-feeling UI"
             ],
-            "actions": {}
+            "actions": {},
+            "grade": "一級"
         },
         {
             "slug": "convlatticenet",
@@ -73,7 +77,8 @@
                 "97K parameters",
                 "480 controlled runs"
             ],
-            "actions": {}
+            "actions": {},
+            "grade": "特級"
         },
         {
             "slug": "dictnet",
@@ -91,7 +96,8 @@
                 "82K parameters",
                 "No pretraining needed"
             ],
-            "actions": {}
+            "actions": {},
+            "grade": "一級"
         },
         {
             "slug": "head-ablation",
@@ -109,7 +115,8 @@
                 "743× smaller head",
                 "5-factor ablation"
             ],
-            "actions": {}
+            "actions": {},
+            "grade": "二級"
         },
         {
             "slug": "oilucode",
@@ -124,20 +131,8 @@
             ],
             "actions": {
                 "github": "https://github.com/OiluProject/OiluTag"
-            }
-        },
-        {
-            "slug": "dive-club",
-            "category": "side",
-            "name": "Dive Club",
-            "context": "Regional swimming league",
-            "description": "Automated regional swimming competitions, making results more transparent and accurate.",
-            "outcomes": [
-                "Sponsored by the regional league"
-            ],
-            "actions": {
-                "github": "https://github.com/IDIRYACINE/dive-club"
-            }
+            },
+            "grade": "一級"
         },
         {
             "slug": "death-note",
@@ -150,7 +145,8 @@
             ],
             "actions": {
                 "github": "https://github.com/IDIRYACINE/death-note-hackathon"
-            }
+            },
+            "image": "/images/side/death-note.jpg"
         },
         {
             "slug": "agritech",
@@ -163,7 +159,36 @@
             ],
             "actions": {
                 "website": "https://agritech-seminar.vercel.app/"
-            }
+            },
+            "image": "/images/side/agritech.jpg"
+        },
+        {
+            "slug": "zawya",
+            "category": "side",
+            "name": "Zawya",
+            "context": "Quranic schools",
+            "description": "A desktop and mobile app for running Quranic schools: schedules, attendance and memorization tracking per student, and accounts for school heads and teachers across several schools.",
+            "outcomes": [
+                "Desktop + mobile"
+            ],
+            "actions": {
+                "github": "https://github.com/IDIRYACINE/zawya_islamic"
+            },
+            "image": "/images/side/zawya.jpg"
+        },
+        {
+            "slug": "vinstaverse",
+            "category": "side",
+            "name": "Vinstaverse",
+            "context": "Local clothing shop",
+            "description": "An e-commerce storefront for a local clothing brand, with a bold editorial look and a full shopping flow.",
+            "outcomes": [
+                "Live storefront"
+            ],
+            "actions": {
+                "website": "https://vinstastore.vercel.app/"
+            },
+            "image": "/images/side/vinstaverse.jpg"
         }
     ]
 }

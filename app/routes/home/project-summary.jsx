@@ -13,8 +13,9 @@ import { cssProps, media } from '~/utils/style';
 import { useHydrated } from '~/hooks/useHydrated';
 import katakana from './katakana.svg';
 import styles from './project-summary.module.css';
-// Lazy chunk styles aren't injected in the static SPA build, so load them up front
-import '~/components/model/model.module.css';
+// Imported here too so the lazy model's styles ship with the page instead of
+// arriving after it renders (a bare side-effect import gets tree-shaken)
+import modelStyles from '~/components/model/model.module.css';
 
 const Model = lazy(() =>
   import('~/components/model').then(module => ({ default: module.Model }))
@@ -27,6 +28,7 @@ export function ProjectSummary({
   index,
   title,
   context,
+  grade,
   description,
   tags = [],
   model,
@@ -78,9 +80,20 @@ export function ProjectSummary({
             collapseDelay={1000}
           />
           <span className={styles.indexNumber} data-visible={visible}>
-            {indexText}
+            <span className={styles.report}>任務報告書</span>
+            {`Mission No.${indexText}`}
           </span>
         </div>
+        {grade && (
+          <span
+            className={styles.stamp}
+            data-visible={visible}
+            aria-label={`Grade: ${grade}`}
+            role="img"
+          >
+            {grade}
+          </span>
+        )}
         {context && (
           <Text className={styles.context} data-visible={visible} size="s" as="p">
             {context}
@@ -131,6 +144,7 @@ export function ProjectSummary({
               {isHydrated && visible && (
                 <Suspense>
                   <Model
+                    className={modelStyles.model}
                     alt={model.alt}
                     cameraPosition={{ x: 0, y: 0, z: 8 }}
                     showDelay={700}
@@ -161,6 +175,7 @@ export function ProjectSummary({
               {isHydrated && visible && (
                 <Suspense>
                   <Model
+                    className={modelStyles.model}
                     alt={model.alt}
                     cameraPosition={{ x: 0, y: 0, z: 11.5 }}
                     showDelay={300}

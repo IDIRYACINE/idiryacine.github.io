@@ -8,6 +8,7 @@ import { Transition } from '~/components/transition';
 import { Fragment, useState } from 'react';
 import { profile } from '~/data/profile.json';
 import { outcomes } from '~/data/about.json';
+import config from '~/config.json';
 import katakana from './katakana.svg';
 import styles from './profile.module.css';
 
@@ -30,15 +31,47 @@ const ProfileText = ({ visible, titleId }) => (
   </Fragment>
 );
 
-const Outcomes = ({ visible }) => (
-  <ul className={styles.outcomes} data-visible={visible}>
-    {outcomes.map(({ value, label }) => (
-      <li className={styles.outcome} key={label}>
-        <span className={styles.outcomeValue}>{value}</span>
-        <span className={styles.outcomeLabel}>{label}</span>
-      </li>
-    ))}
-  </ul>
+const registration = [
+  { kanji: '氏名', label: 'Name', value: config.name },
+  { kanji: '等級', label: 'Grade', value: 'Special Grade' },
+  { kanji: '術式', label: 'Technique', value: 'Shipping outcomes, fast' },
+  { kanji: '所属', label: 'Affiliation', value: 'Infraxcode · Tech Lead' },
+];
+
+// Styled as a Jujutsu High sorcerer registration card, outcomes as the record
+const RegistrationCard = ({ visible }) => (
+  <div className={styles.card} data-visible={visible}>
+    <p className={styles.cardHeader}>
+      <span className={styles.cardKanji}>呪術師登録証</span>
+      Sorcerer registration
+    </p>
+    <dl className={styles.fields}>
+      {registration.map(({ kanji, label, value }) => (
+        <div className={styles.field} key={label}>
+          <dt>
+            <span className={styles.fieldKanji}>{kanji}</span>
+            {label}
+          </dt>
+          <dd>{value}</dd>
+        </div>
+      ))}
+    </dl>
+    <span className={styles.cardStamp} aria-hidden>
+      特級
+    </span>
+    <p className={styles.recordHeader}>
+      <span className={styles.fieldKanji}>戦績</span>
+      Record
+    </p>
+    <ul className={styles.outcomes}>
+      {outcomes.map(({ value, label }) => (
+        <li className={styles.outcome} key={label}>
+          <span className={styles.outcomeValue}>{value}</span>
+          <span className={styles.outcomeLabel}>{label}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
 );
 
 export const Profile = ({ id, visible, sectionRef }) => {
@@ -79,11 +112,11 @@ export const Profile = ({ id, visible, sectionRef }) => {
                   collapseDelay={1000}
                 />
                 <div className={styles.tagText} data-visible={visible}>
-                  Outcomes
+                  About me
                 </div>
               </div>
               <div className={styles.image}>
-                <Outcomes visible={visible} />
+                <RegistrationCard visible={visible} />
                 <svg className={styles.svg} data-visible={visible} viewBox="0 0 136 766">
                   <use href={`${katakana}#katakana-profile`} />
                 </svg>

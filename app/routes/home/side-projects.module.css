@@ -23,9 +23,10 @@
 .card {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: var(--spaceXL);
-  background-color: color-mix(in lab, var(--text) 4%, transparent);
+  overflow: hidden;
+  border: var(--inkBorder);
+  background-color: var(--backgroundLight);
+  box-shadow: 8px 8px 0 var(--text);
   opacity: 0;
   transition-property: opacity;
   transition-timing-function: var(--bezierFastoutSlowin);
@@ -43,6 +44,24 @@
   }
 }
 
+.image {
+  display: block;
+  border-bottom: var(--inkBorder);
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.body {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--spaceXL);
+}
+
 .context {
   margin-bottom: var(--spaceS);
   color: var(--textLight);
@@ -50,6 +69,11 @@
 
 .title {
   margin-bottom: var(--spaceM);
+  font-family: var(--fontDisplay);
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .description {

@@ -16,52 +16,80 @@
 }
 
 .content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space2XL);
+  align-items: center;
   width: 100%;
   max-width: var(--maxWidthL);
-}
 
-.tag {
-  display: grid;
-  grid-template-columns: var(--space4XL) 1fr;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: var(--spaceXL);
-}
-
-.tagText {
-  font-size: var(--fontSizeBodyS);
-  font-weight: var(--fontWeightMedium);
-  color: var(--primary);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  opacity: 0;
-  transition-property: opacity;
-  transition-timing-function: var(--bezierFastoutSlowin);
-  transition-duration: var(--durationM);
-  transition-delay: 900ms;
-
-  @media (--mediaUseMotion) {
-    transition-property: opacity, transform;
-    transform: translate3d(calc(var(--spaceM) * -1), 0, 0);
+  @media (--mediaMobile) {
+    grid-template-columns: 100%;
+    gap: var(--spaceXL);
   }
+}
+
+/* The ink panel, cut on a slant like a manga frame, wiped in on reveal */
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--spaceL);
+  min-height: 260px;
+  padding: var(--spaceXL) var(--space3XL) var(--spaceXL) var(--spaceXL);
+  color: var(--background);
+  background-color: var(--text);
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  transition: clip-path 0.6s cubic-bezier(0.8, 0, 0.2, 1);
 
   &[data-visible='true'] {
-    transform: none;
-    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 48px) 100%, 0 100%);
+  }
+
+  @media (--mediaReduceMotion) {
+    transition: none;
+  }
+
+  @media (--mediaMobile) {
+    min-height: 0;
+    padding: var(--spaceL) var(--space2XL) var(--spaceL) var(--spaceL);
   }
 }
 
+.episode {
+  position: relative;
+  writing-mode: vertical-rl;
+  font-family: var(--fontMincho);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.25em;
+  padding-left: var(--spaceM);
+  border-left: 1px solid color-mix(in lab, var(--background) 45%, transparent);
+}
+
+.kanji {
+  position: relative;
+  font-family: var(--fontMincho);
+  font-weight: 800;
+  font-size: clamp(72px, 9vw, 150px);
+  line-height: 1;
+  writing-mode: vertical-rl;
+
+  @media (--mediaMobile) {
+    writing-mode: horizontal-tb;
+  }
+}
+
+.label,
 .title,
 .description {
-  max-width: 720px;
   opacity: 0;
-  transition-property: opacity;
+  transition-property: opacity, transform;
   transition-timing-function: var(--bezierFastoutSlowin);
   transition-duration: var(--durationXL);
 
   @media (--mediaUseMotion) {
-    transition-property: transform, opacity;
-    transform: translate3d(0, var(--spaceL), 0);
+    transform: translate3d(var(--spaceL), 0, 0);
   }
 
   &[data-visible='true'] {
@@ -70,12 +98,39 @@
   }
 }
 
+.label {
+  display: flex;
+  align-items: center;
+  gap: var(--spaceM);
+  margin-bottom: var(--spaceM);
+  font-family: var(--fontDisplay);
+  font-size: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--textLight);
+  transition-delay: 0.35s;
+}
+
+.labelName {
+  padding: 2px var(--spaceS);
+  color: var(--background);
+  background-color: var(--accent);
+}
+
 .title {
+  max-width: 720px;
   margin-bottom: var(--spaceL);
-  transition-delay: var(--durationS);
+  font-family: var(--fontDisplay);
+  font-weight: 400;
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  transition-delay: 0.45s;
 }
 
 .description {
+  max-width: 620px;
   color: var(--textBody);
-  transition-delay: var(--durationM);
+  transition-delay: 0.55s;
 }

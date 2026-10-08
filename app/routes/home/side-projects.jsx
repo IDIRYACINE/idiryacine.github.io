@@ -29,26 +29,38 @@ export function SideProjects({ id, sectionRef, visible, projects }) {
                   style={cssProps({ delay: index * 100 })}
                   key={project.slug}
                 >
-                  <Text className={styles.context} size="s" as="p">
-                    {project.context}
-                  </Text>
-                  <Heading level={4} as="h3" className={styles.title}>
-                    {project.name}
-                  </Heading>
-                  <Text className={styles.description} size="s" as="p">
-                    {project.description}
-                  </Text>
-                  {link && (
-                    <Button
-                      secondary
-                      iconHoverShift
-                      className={styles.button}
-                      href={link.href}
-                      iconEnd="arrow-right"
-                    >
-                      {link.text}
-                    </Button>
+                  {project.image && (
+                    <img
+                      className={styles.image}
+                      src={project.image}
+                      alt={`${project.name} preview`}
+                      width={960}
+                      height={600}
+                      loading="lazy"
+                    />
                   )}
+                  <div className={styles.body}>
+                    <Text className={styles.context} size="s" as="p">
+                      {project.context}
+                    </Text>
+                    <Heading level={4} as="h3" className={styles.title}>
+                      {project.name}
+                    </Heading>
+                    <Text className={styles.description} size="s" as="p">
+                      {project.description}
+                    </Text>
+                    {link && (
+                      <Button
+                        secondary
+                        iconHoverShift
+                        className={styles.button}
+                        href={link.href}
+                        iconEnd="arrow-right"
+                      >
+                        {link.text}
+                      </Button>
+                    )}
+                  </div>
                 </li>
               );
             })}

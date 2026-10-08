@@ -12,8 +12,9 @@ import { cssProps } from '~/utils/style';
 import config from '~/config.json';
 import { useHydrated } from '~/hooks/useHydrated';
 import styles from './intro.module.css';
-// Lazy chunk styles aren't injected in the static SPA build, so load them up front
-import './displacement-sphere.module.css';
+// Imported here too so the lazy sphere's styles ship with the page instead of
+// arriving after it renders (a bare side-effect import gets tree-shaken)
+import sphereStyles from './displacement-sphere.module.css';
 
 const DisplacementSphere = lazy(() =>
   import('./displacement-sphere').then(module => ({ default: module.DisplacementSphere }))
@@ -65,12 +66,21 @@ export function Intro({ id, sectionRef, scrollIndicatorHidden, ...rest }) {
       <Transition in key={theme} timeout={3000}>
         {({ visible, status }) => (
           <>
-            {isHydrated && (
-              <Suspense>
-                <DisplacementSphere />
-              </Suspense>
-            )}
+            <div className={styles.backdrop} data-visible={visible}>
+              {/* The sphere rendered in ink tones to match the manga palette */}
+              <div className={styles.ink}>
+                {isHydrated && (
+                  <Suspense>
+                    <DisplacementSphere className={sphereStyles.canvas} />
+                  </Suspense>
+                )}
+              </div>
+            </div>
             <header className={styles.text}>
+              <p className={styles.chapter} data-visible={visible}>
+                <span className={styles.chapterKanji}>第零話</span>
+                Prologue
+              </p>
               <h1 className={styles.name} data-visible={visible} id={titleId}>
                 <DecoderText text={config.name} delay={500} />
               </h1>

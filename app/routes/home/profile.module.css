@@ -57,6 +57,10 @@
 }
 
 .title {
+  font-family: var(--fontDisplay);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
   white-space: nowrap;
   margin-bottom: var(--spaceL);
   opacity: 0;
@@ -122,7 +126,8 @@
   bottom: 0;
   transform: translate3d(50%, -20%, 0);
   height: 100%;
-  z-index: var(--zIndex3);
+  /* Behind the registration card, like lettering behind a manga panel */
+  z-index: 0;
   opacity: 0;
   transition: opacity var(--durationM) ease var(--durationL);
   fill: var(--textTitle);
@@ -145,15 +150,12 @@
   }
 }
 
-.outcomes {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--spaceXL) var(--spaceL);
-  margin: 0;
-  padding: var(--spaceXL);
-  padding-right: var(--space3XL);
-  list-style: none;
-  background-color: color-mix(in lab, var(--text) 4%, transparent);
+.card {
+  position: relative;
+  z-index: 1;
+  border: var(--inkBorder);
+  background-color: var(--backgroundLight);
+  box-shadow: 10px 10px 0 var(--text);
   opacity: 0;
   transition-property: opacity;
   transition-timing-function: var(--bezierFastoutSlowin);
@@ -166,12 +168,126 @@
   }
 
   @media (--mediaMobile) {
-    padding-right: var(--spaceXL);
+    box-shadow: 6px 6px 0 var(--text);
   }
 
   &[data-visible='true'] {
     transform: none;
     opacity: 1;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spaceM);
+  margin: 0;
+  padding: var(--spaceS) var(--spaceL);
+  font-family: var(--fontDisplay);
+  font-size: 15px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--background);
+  background-color: var(--text);
+}
+
+.cardKanji {
+  font-family: var(--fontMincho);
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: 0.12em;
+}
+
+.fields {
+  display: grid;
+  margin: 0;
+  padding: var(--spaceM) var(--spaceL) 0;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: var(--spaceM);
+  align-items: baseline;
+  padding: var(--spaceS) 0;
+  border-bottom: 1px dashed color-mix(in lab, var(--text) 35%, transparent);
+
+  & dt {
+    display: flex;
+    gap: var(--spaceS);
+    align-items: baseline;
+    font-family: var(--fontDisplay);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--textLight);
+  }
+
+  & dd {
+    margin: 0;
+    font-weight: var(--fontWeightMedium);
+    color: var(--text);
+  }
+
+  @media (--mediaMobile) {
+    grid-template-columns: 100%;
+    gap: 2px;
+  }
+}
+
+.fieldKanji {
+  font-family: var(--fontMincho);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+
+.cardStamp {
+  position: absolute;
+  top: 56px;
+  right: 22px;
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  font-family: var(--fontMincho);
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1;
+  writing-mode: vertical-rl;
+  color: var(--accent);
+  border: 3px solid var(--accent);
+  outline: 1px solid var(--accent);
+  outline-offset: -8px;
+  border-radius: 6px;
+  transform: rotate(10deg);
+  opacity: 0.9;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' seed='3'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='1 1 1 0.35'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.recordHeader {
+  display: flex;
+  gap: var(--spaceS);
+  align-items: baseline;
+  margin: var(--spaceL) var(--spaceL) 0;
+  font-family: var(--fontDisplay);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--textLight);
+}
+
+.outcomes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spaceL) var(--spaceL);
+  margin: 0;
+  padding: var(--spaceM) var(--spaceL) var(--spaceL);
+  list-style: none;
+
+  @media (--mediaMobile) {
+    grid-template-columns: 100%;
   }
 }
 
@@ -182,10 +298,10 @@
 }
 
 .outcomeValue {
-  font-size: var(--fontSizeH3);
-  font-weight: var(--fontWeightMedium);
-  line-height: 1.1;
-  color: var(--primary);
+  font-family: var(--fontDisplay);
+  font-size: 34px;
+  line-height: 1;
+  color: var(--text);
 }
 
 .outcomeLabel {

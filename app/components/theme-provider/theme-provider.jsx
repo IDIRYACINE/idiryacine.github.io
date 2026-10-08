@@ -5,6 +5,10 @@ import GothamBook from '~/assets/fonts/gotham-book.woff2';
 import GothamMediumItalic from '~/assets/fonts/gotham-medium-italic.woff2';
 import GothamMedium from '~/assets/fonts/gotham-medium.woff2';
 import IPAGothic from '~/assets/fonts/ipa-gothic.woff2';
+// Display faces for the manga styling, subset to the glyphs the UI uses
+import Anton from '~/assets/fonts/anton.woff2';
+import DelaGothicOne from '~/assets/fonts/dela-gothic-one.woff2';
+import ShipporiMincho from '~/assets/fonts/shippori-mincho-b1-extrabold.woff2';
 import { createContext, useContext } from 'react';
 import { classes, media } from '~/utils/style';
 import { themes, tokens } from './theme';
@@ -168,6 +172,30 @@ const fontStyles = squish(`
     font-family: IPA Gothic;
     font-weight: 400;
     src: url(${IPAGothic}) format('woff2');
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: Anton;
+    font-weight: 400;
+    src: url(${Anton}) format('woff2');
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: Dela Gothic One;
+    font-weight: 400;
+    src: url(${DelaGothicOne}) format('woff2');
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: Shippori Mincho B1;
+    font-weight: 800;
+    src: url(${ShipporiMincho}) format('woff2');
     font-display: swap;
     font-style: normal;
   }

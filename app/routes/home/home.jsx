@@ -42,6 +42,9 @@ const sections = [
     id: 'software',
     category: 'software',
     label: 'Software',
+    episode: '壱',
+    number: 1,
+    kanji: '術式',
     title: 'Products that ship, and move the business',
     description:
       'Leading teams from discovery to delivery: shorter time to market, platforms that hold up in production, and costs that go down instead of up.',
@@ -50,6 +53,9 @@ const sections = [
     id: 'ai',
     category: 'ai',
     label: 'AI / ML',
+    episode: '弐',
+    number: 2,
+    kanji: '呪力',
     title: 'Research-grade AI, built to run for real',
     description:
       'Models that need less data and less compute to be accurate, from medical imaging to real-time computer vision.',
@@ -60,6 +66,9 @@ const sideProjectsSection = {
   id: 'side-projects',
   category: 'side',
   label: 'Side projects',
+  episode: '参',
+  number: 3,
+  kanji: '修行',
   title: 'Things I build for fun',
   description: 'Hackathons, community tools and experiments outside of client work.',
 };
@@ -185,6 +194,7 @@ export const Home = () => {
               index={index + 1}
               title={project.name}
               context={project.context}
+              grade={project.grade}
               description={project.description}
               tags={project.outcomes}
               model={getProjectModel(project)}

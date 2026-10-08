@@ -1,9 +1,57 @@
 .intro {
+  position: relative;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+/* The sphere sits behind the cover lettering */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* The sphere rendered as a smooth ink wash, no colour */
+.ink {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  filter: grayscale(1) contrast(1.1);
+
+  @media (--mediaMobile) {
+    opacity: 0.5;
+  }
+}
+
+.chapter {
+  display: flex;
+  align-items: center;
+  gap: var(--spaceM);
+  margin: 0 0 var(--spaceL);
+  font-family: var(--fontDisplay);
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--textLight);
+  opacity: 0;
+  transition: opacity var(--durationL) var(--bezierFastoutSlowin) 0.1s;
+
+  &[data-visible='true'] {
+    opacity: 1;
+  }
+}
+
+.chapterKanji {
+  padding: 4px var(--spaceS);
+  font-family: var(--fontMincho);
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--background);
+  background-color: var(--text);
 }
 
 .text {
@@ -72,7 +120,10 @@
 }
 
 .title {
-  letter-spacing: -0.03em;
+  font-family: var(--fontDisplay);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 
 .row {
@@ -120,7 +171,7 @@
 
   &::after {
     content: '';
-    background: var(--accent);
+    background: var(--text);
     animation-duration: 1.5s;
     animation-delay: var(--delay);
     animation-fill-mode: forwards;

@@ -5,23 +5,15 @@ import { delay } from '~/utils/delay';
 import { classes } from '~/utils/style';
 import styles from './decoder-text.module.css';
 
+// Kanji from the Malevolent Shrine the text decodes through
 // prettier-ignore
 const glyphs = [
-  'ア', 'イ', 'ウ', 'エ', 'オ',
-  'カ', 'キ', 'ク', 'ケ', 'コ',
-  'サ', 'シ', 'ス', 'セ', 'ソ',
-  'タ', 'チ', 'ツ', 'テ', 'ト',
-  'ナ', 'ニ', 'ヌ', 'ネ', 'ノ',
-  'ハ', 'ヒ', 'フ', 'ヘ', 'ホ',
-  'マ', 'ミ', 'ム', 'メ', 'モ',
-  'ヤ', 'ユ', 'ヨ', 'ー',
-  'ラ', 'リ', 'ル', 'レ', 'ロ',
-  'ワ', 'ヰ', 'ヱ', 'ヲ', 'ン',
-  'ガ', 'ギ', 'グ', 'ゲ', 'ゴ',
-  'ザ', 'ジ', 'ズ', 'ゼ', 'ゾ',
-  'ダ', 'ヂ', 'ヅ', 'デ', 'ド',
-  'バ', 'ビ', 'ブ', 'ベ', 'ボ',
-  'パ', 'ピ', 'プ', 'ペ', 'ポ',
+  '伏', '魔', '御', '廚', '子',
+  '領', '域', '展', '開', '解',
+  '捌', '竈', '宿', '儺', '呪',
+  '術', '式', '縛', '誓', '斬',
+  '血', '骨', '獄', '門', '鬼',
+  '神', '祟', '禍', '刃', '赫',
 ];
 
 const CharType = {
@@ -35,7 +27,8 @@ function shuffle(content, output, position) {
       return { type: CharType.Value, value };
     }
 
-    if (position % 1 < 0.5) {
+    // The previous output can be shorter than the text on the first frames
+    if (position % 1 < 0.5 || !output[index]) {
       const rand = Math.floor(Math.random() * glyphs.length);
       return { type: CharType.Glyph, value: glyphs[rand] };
     }

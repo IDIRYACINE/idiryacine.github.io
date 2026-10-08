@@ -16,11 +16,14 @@ import { VisuallyHidden } from '~/components/visually-hidden';
 import { Navbar } from '~/layouts/navbar';
 import { Progress } from '~/components/progress';
 import config from '~/config.json';
+import { baseMeta } from '~/utils/meta';
 import styles from './root.module.css';
-import './reset.module.css';
-import './global.module.css';
+import resetStylesUrl from './reset.css?url';
+import globalStylesUrl from './global.css?url';
 
 export const links = () => [
+  { rel: 'stylesheet', href: resetStylesUrl },
+  { rel: 'stylesheet', href: globalStylesUrl },
   {
     rel: 'preload',
     href: GothamMedium,
@@ -43,26 +46,34 @@ export const links = () => [
   { rel: 'author', href: '/humans.txt', type: 'text/plain' },
 ];
 
+// Default meta for the prerendered index.html, routes override it once loaded
+export const meta = () =>
+  baseMeta({
+    title: 'Fullstack & AI Engineer',
+    description: `${config.name}: fullstack and ML/AI engineer and tech lead. Faster time to market, high-output delivery, product discovery and hard problems solved.`,
+  });
+
 const THEME_KEY = 'theme';
 
 // Runs before hydration so a stored light theme doesn't flash dark first
 const themeScript = `try{var t=localStorage.getItem('${THEME_KEY}');if(t)document.body.dataset.theme=t}catch(e){}`;
 
-export default function App() {
-  const [theme, setTheme] = useState('dark');
-  const { state } = useNavigation();
+// The document shell: Remix prerenders this into index.html and keeps it mounted
+// through hydration, so the stored theme never flashes
+export function Layout({ children }) {
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
     try {
       const storedTheme = localStorage.getItem(THEME_KEY);
       if (storedTheme) setTheme(storedTheme);
     } catch {
-      // Storage can be unavailable in private browsing, fall back to dark
+      // Storage can be unavailable in private browsing, fall back to light
     }
   }, []);
 
   function toggleTheme(newTheme) {
-    const nextTheme = newTheme ? newTheme : theme === 'dark' ? 'light' : 'dark';
+    const nextTheme = newTheme ? newTheme : theme === 'light' ? 'dark' : 'light';
     setTheme(nextTheme);
 
     try {
@@ -72,20 +83,13 @@ export default function App() {
     }
   }
 
-  useEffect(() => {
-    console.info(
-      `${config.ascii}\n`,
-      `Taking a peek huh? Check out the source code: ${config.repo}\n\n`
-    );
-  }, []);
-
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Theme color doesn't support oklch so I'm hard coding these hexes for now */}
-        <meta name="theme-color" content={theme === 'dark' ? '#111' : '#F2F2F2'} />
+        <meta name="theme-color" content={theme === 'dark' ? '#0b0b0c' : '#f3f1ea'} />
         <meta
           name="color-scheme"
           content={theme === 'light' ? 'light dark' : 'dark light'}
@@ -98,19 +102,7 @@ export default function App() {
       <body data-theme={theme} suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <ThemeProvider theme={theme} toggleTheme={toggleTheme}>
-          <Progress />
-          <VisuallyHidden showOnFocus as="a" className={styles.skip} href="#main-content">
-            Skip to main content
-          </VisuallyHidden>
-          <Navbar />
-          <main
-            id="main-content"
-            className={styles.container}
-            tabIndex={-1}
-            data-loading={state === 'loading'}
-          >
-            <Outlet />
-          </main>
+          {children}
         </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
@@ -119,25 +111,42 @@ export default function App() {
   );
 }
 
+export default function App() {
+  const { state } = useNavigation();
+
+  useEffect(() => {
+    console.info(
+      `${config.ascii}\n`,
+      `Taking a peek huh? Check out the source code: ${config.repo}\n\n`
+    );
+  }, []);
+
+  return (
+    <>
+      <Progress />
+      <VisuallyHidden showOnFocus as="a" className={styles.skip} href="#main-content">
+        Skip to main content
+      </VisuallyHidden>
+      <Navbar />
+      <main
+        id="main-content"
+        className={styles.container}
+        tabIndex={-1}
+        data-loading={state === 'loading'}
+      >
+        <Outlet />
+      </main>
+    </>
+  );
+}
+
+// Shown in the prerendered index.html until the app hydrates
+export function HydrateFallback() {
+  return null;
+}
+
 export function ErrorBoundary() {
   const error = useRouteError();
 
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#111" />
-        <meta name="color-scheme" content="dark light" />
-        <style dangerouslySetInnerHTML={{ __html: themeStyles }} />
-        <Meta />
-        <Links />
-      </head>
-      <body data-theme="dark">
-        <Error error={error} />
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
-  );
+  return <Error error={error} />;
 }

@@ -17,6 +17,10 @@ const baseTokens = {
     'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
   japaneseFontStack:
     'IPA Gothic, ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, Hiragino Sans, Osaka, メイリオ, Meiryo, Segoe UI, sans-serif',
+  // Manga cover lettering, title card kanji and heavy SFX kanji
+  fontDisplay: `Anton, Impact, 'Arial Narrow', sans-serif`,
+  fontMincho: `'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif`,
+  fontSfx: `'Dela Gothic One', 'Hiragino Kaku Gothic Pro', sans-serif`,
   fontWeightRegular: 400,
   fontWeightMedium: 500,
   fontWeightBold: 700,
@@ -107,28 +111,30 @@ const tokensMobileSmall = {
 };
 
 // Tokens that change based on theme
+// Anime title card: black frame, paper-white ink, vermilion only for seals
 const dark = {
-  background: 'oklch(17.76% 0 0)',
-  backgroundLight: 'oklch(21.78% 0 0)',
-  primary: 'oklch(84.42% 0.19 202.24)',
-  accent: 'oklch(84.42% 0.19 202.24)',
-  error: 'oklch(65.91% 0.249 13.76)',
-  text: 'var(--white)',
+  background: 'oklch(13% 0.003 270)',
+  backgroundLight: 'oklch(19% 0.004 270)',
+  primary: 'oklch(95% 0.01 90)',
+  accent: 'oklch(62% 0.2 30)',
+  error: 'oklch(62% 0.2 30)',
+  text: 'oklch(95% 0.01 90)',
   textTitle: 'var(--text)',
-  textBody: 'color-mix(in lab, var(--text) 80%, transparent)',
+  textBody: 'color-mix(in lab, var(--text) 82%, transparent)',
   textLight: 'color-mix(in lab, var(--text) 60%, transparent)',
 };
 
+// Manga page: newsprint and black ink, vermilion only for hanko seals
 const light = {
-  background: 'oklch(96.12% 0 0)',
-  backgroundLight: 'var(--white)',
-  primary: 'var(--black)',
-  accent: 'oklch(84.42% 0.19 202.24)',
-  error: 'oklch(63.17% 0.259 25.41)',
-  text: 'var(--black)',
-  textTitle: 'color-mix(in lab, var(--text) 90%, transparent)',
-  textBody: 'color-mix(in lab, var(--text) 75%, transparent)',
-  textLight: 'color-mix(in lab, var(--text) 55%, transparent)',
+  background: 'oklch(95.8% 0.008 90)',
+  backgroundLight: 'oklch(98.5% 0.004 90)',
+  primary: 'oklch(17% 0.004 270)',
+  accent: 'oklch(55% 0.2 30)',
+  error: 'oklch(55% 0.2 30)',
+  text: 'oklch(17% 0.004 270)',
+  textTitle: 'var(--text)',
+  textBody: 'color-mix(in lab, var(--text) 82%, transparent)',
+  textLight: 'color-mix(in lab, var(--text) 58%, transparent)',
 };
 
 export const tokens = {
