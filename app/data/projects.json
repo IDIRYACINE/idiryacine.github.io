@@ -57,36 +57,58 @@
             "actions": {}
         },
         {
-            "slug": "medical-ai",
+            "slug": "convlatticenet",
             "category": "ai",
-            "name": "Better diagnoses from a smaller model",
-            "context": "PhD research · Medical imaging",
+            "name": "ResNet-18 accuracy at a hundredth of the size",
+            "context": "Research · ConvLatticeNet",
             "device": "laptop",
-            "description": "Designed a compact CNN architecture for imbalanced medical datasets that classifies disease more accurately than SqueezeNet while staying cheap enough to run where clinics actually are.",
+            "description": "Designed a 97K-parameter network for small, class-imbalanced medical datasets. It matches or beats the ResNet-18 benchmark on all six MedMNIST tasks with about a hundredth of the parameters, and stays accurate where published lightweight networks lose up to eight AUC points.",
+            "stat": {
+                "value": "1/100",
+                "label": "the parameters, ResNet-18 accuracy"
+            },
             "outcomes": [
-                "+7% classification accuracy",
-                "Beats SqueezeNet",
-                "Built for imbalanced data"
+                "≥ ResNet-18 on 6 of 6 datasets",
+                "97K parameters",
+                "480 controlled runs"
             ],
             "actions": {}
         },
         {
-            "slug": "efficient-attention",
+            "slug": "dictnet",
             "category": "ai",
-            "name": "Same accuracy, less compute",
-            "context": "PhD research · Efficient attention",
+            "name": "Accurate models from a few hundred images",
+            "context": "Research · DictNet",
             "device": "laptop",
-            "description": "Developed a mathematical variant of the attention mechanism that matches standard attention on medical datasets with fewer GFLOPs, and ran a five-factor ablation study turning findings into practical guidance for clinical teams.",
-            "outcomes": [
-                "Fewer GFLOPs",
-                "Same accuracy",
-                "5-factor ablation study"
-            ],
-            "actions": {},
+            "description": "Built an 82K-parameter network whose first stage is constructed before training instead of learned, so it needs no pretrained weights and beats every from-scratch baseline on every seed across three medical tasks.",
             "stat": {
-                "value": "−GFLOPs",
-                "label": "same accuracy as standard attention"
-            }
+                "value": "+10.5",
+                "label": "AUC over from-scratch baselines"
+            },
+            "outcomes": [
+                "+2.6 to +10.5 AUC",
+                "82K parameters",
+                "No pretraining needed"
+            ],
+            "actions": {}
+        },
+        {
+            "slug": "head-ablation",
+            "category": "ai",
+            "name": "Catching a flaw standard metrics hide",
+            "context": "Research · Retinopathy grading",
+            "device": "laptop",
+            "description": "Ran a five-factor ablation across four medical tasks showing that a common classifier-head design misgrades diabetic retinopathy further along the severity scale, a harm invisible to F1 and AUC, and that a single linear classifier matches heads 743× its size.",
+            "stat": {
+                "value": "743×",
+                "label": "smaller classifier head, same accuracy"
+            },
+            "outcomes": [
+                "Hidden harm exposed",
+                "743× smaller head",
+                "5-factor ablation"
+            ],
+            "actions": {}
         },
         {
             "slug": "oilucode",

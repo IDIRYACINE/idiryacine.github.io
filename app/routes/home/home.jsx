@@ -52,7 +52,7 @@ const sections = [
     label: 'AI / ML',
     title: 'Research-grade AI, built to run for real',
     description:
-      'Models and algorithms that are more accurate and cheaper to run, from medical imaging to real-time computer vision.',
+      'Models that need less data and less compute to be accurate, from medical imaging to real-time computer vision.',
   },
 ];
 
