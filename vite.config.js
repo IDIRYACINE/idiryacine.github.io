@@ -5,7 +5,7 @@ import mdx from '@mdx-js/rollup';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import rehypeSlug from 'rehype-slug';
-import rehypePrism from '@mapbox/rehype-prism';
+import rehypePrism from 'rehype-prism-plus';
 
 // Adds a `wordCount` to article frontmatter so reading time works without a server
 function remarkWordCount() {
