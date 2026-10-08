@@ -7,4 +7,12 @@
     <loc>https://idiryacine.github.io/contact/</loc>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://idiryacine.github.io/articles/</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://idiryacine.github.io/articles/hello-world</loc>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

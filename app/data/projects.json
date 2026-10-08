@@ -2,60 +2,142 @@
     "projects": [
         {
             "slug": "infraxcode",
+            "category": "software",
             "name": "From concept to shipped AI product",
             "context": "Infraxcode · Tech Lead",
             "device": "laptop",
             "description": "Led a team of three through product discovery and six rapid product-vision iterations to ship an AI developer-tools product, and set up an AI-assisted workflow that speeds up every delivery cycle.",
-            "outcomes": ["6 iterations to direction", "3-engineer team", "Faster delivery cycles"],
-            "actions": {}
-        },
-        {
-            "slug": "medical-ai",
-            "name": "Leaner AI for medical imaging",
-            "context": "PhD research · ML/AI",
-            "device": "laptop",
-            "description": "Designed a compact CNN architecture and a more efficient attention mechanism, so clinical models get more accurate while needing less compute.",
-            "outcomes": ["+7% classification accuracy", "Lower GFLOPs, same accuracy"],
+            "outcomes": [
+                "6 iterations to direction",
+                "3-engineer team",
+                "Faster delivery cycles"
+            ],
             "actions": {}
         },
         {
             "slug": "ibdapro",
+            "category": "software",
             "name": "A government-grade platform, delivered",
             "context": "Ibdapro · Lead Developer",
             "device": "laptop",
             "description": "Led planning, design and delivery of three projects, including a multi-tenant platform where every region runs as a legally separate entity, with faster responses on the busiest requests.",
-            "outcomes": ["3 projects delivered", "Legal-entity isolation", "Real-time features"],
+            "outcomes": [
+                "3 projects delivered",
+                "Legal-entity isolation",
+                "Real-time features"
+            ],
             "actions": {}
         },
         {
             "slug": "anfashion",
+            "category": "software",
             "name": "Turning around a stalled e-commerce business",
             "context": "AnFashion · Consultant",
             "device": "laptop",
             "description": "Resolved a year-long deadlock between a national clothing franchise and its development agency, took over the infrastructure and migrated the store to a platform the business could rely on.",
-            "outcomes": ["−60% running costs", "Year-long blocker resolved"],
+            "outcomes": [
+                "−60% running costs",
+                "Year-long blocker resolved"
+            ],
             "actions": {
                 "website": "https://www.anfashion.dz"
             }
         },
         {
             "slug": "hader",
+            "category": "software",
             "name": "Co-founding and shipping a product",
             "context": "Hader · Co-founder",
             "device": "phone",
             "description": "Co-founded the company and built its role-based platform and mobile apps, making the product feel instant and catching crashes before users report them.",
-            "outcomes": ["2 apps on the Play Store", "Instant-feeling UI"],
+            "outcomes": [
+                "2 apps on the Play Store",
+                "Instant-feeling UI"
+            ],
             "actions": {}
         },
         {
+            "slug": "medical-ai",
+            "category": "ai",
+            "name": "Better diagnoses from a smaller model",
+            "context": "PhD research · Medical imaging",
+            "device": "laptop",
+            "description": "Designed a compact CNN architecture for imbalanced medical datasets that classifies disease more accurately than SqueezeNet while staying cheap enough to run where clinics actually are.",
+            "outcomes": [
+                "+7% classification accuracy",
+                "Beats SqueezeNet",
+                "Built for imbalanced data"
+            ],
+            "actions": {}
+        },
+        {
+            "slug": "efficient-attention",
+            "category": "ai",
+            "name": "Same accuracy, less compute",
+            "context": "PhD research · Efficient attention",
+            "device": "laptop",
+            "description": "Developed a mathematical variant of the attention mechanism that matches standard attention on medical datasets with fewer GFLOPs, and ran a five-factor ablation study turning findings into practical guidance for clinical teams.",
+            "outcomes": [
+                "Fewer GFLOPs",
+                "Same accuracy",
+                "5-factor ablation study"
+            ],
+            "actions": {},
+            "stat": {
+                "value": "−GFLOPs",
+                "label": "same accuracy as standard attention"
+            }
+        },
+        {
             "slug": "oilucode",
+            "category": "ai",
             "name": "Reviving a stalled patent project",
             "context": "OiluCode · Research Engineer",
             "device": "laptop",
             "description": "Completed a computer-vision project that had stalled for two years, with a homography-free marker detection algorithm fast enough for real time.",
-            "outcomes": ["2–10ms detection", "US patent pending"],
+            "outcomes": [
+                "2–10ms detection",
+                "US patent pending"
+            ],
             "actions": {
                 "github": "https://github.com/OiluProject/OiluTag"
+            }
+        },
+        {
+            "slug": "dive-club",
+            "category": "side",
+            "name": "Dive Club",
+            "context": "Regional swimming league",
+            "description": "Automated regional swimming competitions, making results more transparent and accurate.",
+            "outcomes": [
+                "Sponsored by the regional league"
+            ],
+            "actions": {
+                "github": "https://github.com/IDIRYACINE/dive-club"
+            }
+        },
+        {
+            "slug": "death-note",
+            "category": "side",
+            "name": "Death Note",
+            "context": "International hackathon",
+            "description": "An AI-driven web experience built on OpenAI and DALL·E for the Convex / WebDevCody hackathon.",
+            "outcomes": [
+                "Hackathon entry"
+            ],
+            "actions": {}
+        },
+        {
+            "slug": "agritech",
+            "category": "side",
+            "name": "Agritech",
+            "context": "National seminar",
+            "description": "Digitized organization and participant management for a national university seminar with a dedicated app and website.",
+            "outcomes": [
+                "App + website"
+            ],
+            "actions": {
+                "website": "https://agritech-seminar.vercel.app/"
             }
         }
     ]

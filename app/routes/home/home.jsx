@@ -3,7 +3,9 @@ import { baseMeta } from '~/utils/meta';
 import { Intro } from './intro';
 import { Profile } from './profile';
 import { ProjectSummary } from './project-summary';
-import { useEffect, useRef, useState } from 'react';
+import { SectionIntro } from './section-intro';
+import { SideProjects } from './side-projects';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import config from '~/config.json';
 import { projects } from '~/data/projects.json';
 import styles from './home.module.css';
@@ -35,6 +37,40 @@ export const meta = () => {
   });
 };
 
+const sections = [
+  {
+    id: 'software',
+    category: 'software',
+    label: 'Software',
+    title: 'Products that ship, and move the business',
+    description:
+      'Leading teams from discovery to delivery: shorter time to market, platforms that hold up in production, and costs that go down instead of up.',
+  },
+  {
+    id: 'ai',
+    category: 'ai',
+    label: 'AI / ML',
+    title: 'Research-grade AI, built to run for real',
+    description:
+      'Models and algorithms that are more accurate and cheaper to run, from medical imaging to real-time computer vision.',
+  },
+];
+
+const sideProjectsSection = {
+  id: 'side-projects',
+  category: 'side',
+  label: 'Side projects',
+  title: 'Things I build for fun',
+  description: 'Hackathons, community tools and experiments outside of client work.',
+};
+
+// Side projects are ready but hidden until there's more to show
+const showSideProjects = false;
+
+function getProjects(category) {
+  return projects.filter(project => project.category === category);
+}
+
 function getProjectAction({ website, playstore, github }) {
   if (website) return { buttonText: 'View website', buttonLink: website };
   if (playstore) return { buttonText: 'Get the app', buttonLink: playstore };
@@ -62,12 +98,15 @@ export const Home = () => {
   const [visibleSections, setVisibleSections] = useState([]);
   const [scrollIndicatorHidden, setScrollIndicatorHidden] = useState(false);
   const intro = useRef();
-  const projectRefs = useRef([]);
-  const details = useRef();
+  const sectionRefs = useRef({});
+
+  const registerSection = key => element => {
+    sectionRefs.current[key] = element;
+  };
+
+  const isVisible = key => visibleSections.includes(sectionRefs.current[key]);
 
   useEffect(() => {
-    const sections = [intro, ...projectRefs.current.map(current => ({ current })), details];
-
     const sectionObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach(entry => {
@@ -89,9 +128,9 @@ export const Home = () => {
       { rootMargin: '-100% 0px 0px 0px' }
     );
 
-    sections.forEach(section => {
-      sectionObserver.observe(section.current);
-    });
+    [intro.current, ...Object.values(sectionRefs.current)]
+      .filter(Boolean)
+      .forEach(section => sectionObserver.observe(section));
 
     indicatorObserver.observe(intro.current);
 
@@ -108,25 +147,49 @@ export const Home = () => {
         sectionRef={intro}
         scrollIndicatorHidden={scrollIndicatorHidden}
       />
-      {projects.map((project, index) => (
-        <ProjectSummary
-          key={project.name}
-          id={`project-${index + 1}`}
-          alternate={index % 2 === 1}
-          sectionRef={element => (projectRefs.current[index] = element)}
-          visible={visibleSections.includes(projectRefs.current[index])}
-          index={index + 1}
-          title={project.name}
-          context={project.context}
-          description={project.description}
-          tags={project.outcomes}
-          model={getProjectModel(project)}
-          {...getProjectAction(project.actions)}
-        />
+      {sections.map(section => (
+        <Fragment key={section.id}>
+          <SectionIntro
+            {...section}
+            sectionRef={registerSection(section.id)}
+            visible={isVisible(section.id)}
+          />
+          {getProjects(section.category).map((project, index) => (
+            <ProjectSummary
+              key={project.slug}
+              id={`${section.id}-${index + 1}`}
+              alternate={index % 2 === 1}
+              sectionRef={registerSection(project.slug)}
+              visible={isVisible(project.slug)}
+              index={index + 1}
+              title={project.name}
+              context={project.context}
+              description={project.description}
+              tags={project.outcomes}
+              model={getProjectModel(project)}
+              {...getProjectAction(project.actions)}
+            />
+          ))}
+        </Fragment>
       ))}
+      {showSideProjects && (
+        <>
+          <SectionIntro
+            {...sideProjectsSection}
+            sectionRef={registerSection(sideProjectsSection.id)}
+            visible={isVisible(sideProjectsSection.id)}
+          />
+          <SideProjects
+            id={`${sideProjectsSection.id}-list`}
+            sectionRef={registerSection('side-projects-list')}
+            visible={isVisible('side-projects-list')}
+            projects={getProjects(sideProjectsSection.category)}
+          />
+        </>
+      )}
       <Profile
-        sectionRef={details}
-        visible={visibleSections.includes(details.current)}
+        sectionRef={registerSection('details')}
+        visible={isVisible('details')}
         id="details"
       />
       <Footer />

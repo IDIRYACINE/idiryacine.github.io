@@ -15,15 +15,19 @@
     "build:storybook": "storybook build"
   },
   "dependencies": {
+    "@mdx-js/react": "^3.1.1",
     "@remix-run/react": "^2.7.1",
     "framer-motion": "11.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "rehype-slug": "^6.0.0",
     "three": "^0.161.0",
     "three-stdlib": "^2.29.4"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^2.1.1",
+    "@mapbox/rehype-prism": "^0.9.0",
+    "@mdx-js/rollup": "^3.1.1",
     "@remix-run/dev": "^2.7.1",
     "@storybook/addon-a11y": "^7.6.17",
     "@storybook/addon-essentials": "^7.6.17",
@@ -44,6 +48,8 @@
     "postcss": "^8.4.33",
     "postcss-custom-media": "^10.0.2",
     "prop-types": "^15.8.1",
+    "remark-frontmatter": "^5.0.0",
+    "remark-mdx-frontmatter": "^4.0.0",
     "storybook": "^7.6.17",
     "vite": "^5.1.0",
     "vite-jsconfig-paths": "^2.0.1"

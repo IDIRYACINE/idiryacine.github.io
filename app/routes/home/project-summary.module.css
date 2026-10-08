@@ -23,16 +23,11 @@
     margin-bottom: 0;
   }
 
-  /* Keep the first device model clear of the intro title */
   &[data-first='true'] {
-    margin-top: var(--space5XL);
+    margin-top: 0;
 
     @media (--mediaTablet) {
-      margin-top: var(--space4XL);
-    }
-
-    @media (--mediaMobile) {
-      margin-top: var(--space3XL);
+      margin-top: 0;
     }
   }
 }
