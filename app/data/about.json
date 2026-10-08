@@ -1,0 +1,10 @@
+{
+    "outcomes": [
+        { "value": "3", "label": "Engineers led, reporting directly to the CTO" },
+        { "value": "6", "label": "Rapid product iterations from concept to direction" },
+        { "value": "~$38K", "label": "Annual operating costs cut with an in-house ERP" },
+        { "value": "−60%", "label": "Infrastructure running costs for a retail client" },
+        { "value": "+7%", "label": "Disease-classification accuracy from a leaner model" },
+        { "value": "2–10ms", "label": "Real-time marker detection, US patent pending" }
+    ]
+}

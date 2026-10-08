@@ -1,0 +1,12 @@
+{
+    "profile": {
+        "name": "Idir Yacine",
+        "email": "idiryacinesp@gmail.com",
+        "github": "https://github.com/IDIRYACINE",
+        "biography": [
+            "I’m Yacine, a fullstack and ML/AI engineer and tech lead. I don’t sell a framework, I sell outcomes: shorter time to market, teams that ship more, and hard problems that stop being problems.",
+            "Today I lead a team of three engineers at Infraxcode, owning product discovery, technical direction and delivery of an AI developer-tools product. Before that I co-founded Hader, led delivery of a government-grade platform at Ibdapro, and turned around stalled projects for clients. My PhD in deep learning for medical image analysis brings research-grade rigor to everything I ship.",
+            "If you need an idea taken to production, fast, let’s talk."
+        ]
+    }
+}

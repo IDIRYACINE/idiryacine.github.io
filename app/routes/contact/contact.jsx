@@ -14,8 +14,7 @@ import { useRef } from 'react';
 import { cssProps, msToNum, numToMs } from '~/utils/style';
 import { baseMeta } from '~/utils/meta';
 import { Form, useActionData, useNavigation } from '@remix-run/react';
-import { json } from '@remix-run/cloudflare';
-import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
+import config from '~/config.json';
 import styles from './contact.module.css';
 
 export const meta = () => {
@@ -30,15 +29,8 @@ const MAX_EMAIL_LENGTH = 512;
 const MAX_MESSAGE_LENGTH = 4096;
 const EMAIL_PATTERN = /(.+)@(.+){2,}\.(.+){2,}/;
 
-export async function action({ context, request }) {
-  const ses = new SESClient({
-    region: 'us-east-1',
-    credentials: {
-      accessKeyId: context.cloudflare.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: context.cloudflare.env.AWS_SECRET_ACCESS_KEY,
-    },
-  });
-
+// The site is static, so messages are handed off to the visitor's email client
+export async function clientAction({ request }) {
   const formData = await request.formData();
   const isBot = String(formData.get('name'));
   const email = String(formData.get('email'));
@@ -46,9 +38,8 @@ export async function action({ context, request }) {
   const errors = {};
 
   // Return without sending if a bot trips the honeypot
-  if (isBot) return json({ success: true });
+  if (isBot) return { success: true };
 
-  // Handle input validation on the server
   if (!email || !EMAIL_PATTERN.test(email)) {
     errors.email = 'Please enter a valid email address.';
   }
@@ -66,31 +57,14 @@ export async function action({ context, request }) {
   }
 
   if (Object.keys(errors).length > 0) {
-    return json({ errors });
+    return { errors };
   }
 
-  // Send email via Amazon SES
-  await ses.send(
-    new SendEmailCommand({
-      Destination: {
-        ToAddresses: [context.cloudflare.env.EMAIL],
-      },
-      Message: {
-        Body: {
-          Text: {
-            Data: `From: ${email}\n\n${message}`,
-          },
-        },
-        Subject: {
-          Data: `Portfolio message from ${email}`,
-        },
-      },
-      Source: `Portfolio <${context.cloudflare.env.FROM_EMAIL}>`,
-      ReplyToAddresses: [email],
-    })
-  );
+  const subject = encodeURIComponent(`Portfolio message from ${email}`);
+  const body = encodeURIComponent(`From: ${email}\n\n${message}`);
+  window.location.href = `mailto:${config.email}?subject=${subject}&body=${body}`;
 
-  return json({ success: true });
+  return { success: true };
 }
 
 export const Contact = () => {
@@ -206,7 +180,7 @@ export const Contact = () => {
               className={styles.completeTitle}
               data-status={status}
             >
-              Message Sent
+              Almost there
             </Heading>
             <Text
               size="l"
@@ -215,7 +189,7 @@ export const Contact = () => {
               data-status={status}
               style={getDelay(tokens.base.durationXS)}
             >
-              I’ll get back to you within a couple days, sit tight
+              Your email app should open with the message ready to send. I’ll get back to you within a couple days.
             </Text>
             <Button
               secondary

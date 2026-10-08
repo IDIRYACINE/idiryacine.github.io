@@ -1,7 +1,12 @@
 {
-  "short_name": "Hamish Williams",
-  "name": "Design Portfolio of Hamish Williams",
+  "short_name": "Idir Yacine",
+  "name": "Portfolio of Idir Yacine",
   "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
     {
       "src": "shortcut.png",
       "sizes": "64x64",

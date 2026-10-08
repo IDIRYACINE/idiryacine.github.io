@@ -4,16 +4,13 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useFetcher,
-  useLoaderData,
   useNavigation,
   useRouteError,
 } from '@remix-run/react';
-import { createCookieSessionStorage, json } from '@remix-run/cloudflare';
 import { ThemeProvider, themeStyles } from '~/components/theme-provider';
 import GothamBook from '~/assets/fonts/gotham-book.woff2';
 import GothamMedium from '~/assets/fonts/gotham-medium.woff2';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Error } from '~/layouts/error';
 import { VisuallyHidden } from '~/components/visually-hidden';
 import { Navbar } from '~/layouts/navbar';
@@ -46,51 +43,33 @@ export const links = () => [
   { rel: 'author', href: '/humans.txt', type: 'text/plain' },
 ];
 
-export const loader = async ({ request, context }) => {
-  const { url } = request;
-  const { pathname } = new URL(url);
-  const pathnameSliced = pathname.endsWith('/') ? pathname.slice(0, -1) : url;
-  const canonicalUrl = `${config.url}${pathnameSliced}`;
+const THEME_KEY = 'theme';
 
-  const { getSession, commitSession } = createCookieSessionStorage({
-    cookie: {
-      name: '__session',
-      httpOnly: true,
-      maxAge: 604_800,
-      path: '/',
-      sameSite: 'lax',
-      secrets: [context.cloudflare.env.SESSION_SECRET || ' '],
-      secure: true,
-    },
-  });
-
-  const session = await getSession(request.headers.get('Cookie'));
-  const theme = session.get('theme') || 'dark';
-
-  return json(
-    { canonicalUrl, theme },
-    {
-      headers: {
-        'Set-Cookie': await commitSession(session),
-      },
-    }
-  );
-};
+// Runs before hydration so a stored light theme doesn't flash dark first
+const themeScript = `try{var t=localStorage.getItem('${THEME_KEY}');if(t)document.body.dataset.theme=t}catch(e){}`;
 
 export default function App() {
-  let { canonicalUrl, theme } = useLoaderData();
-  const fetcher = useFetcher();
+  const [theme, setTheme] = useState('dark');
   const { state } = useNavigation();
 
-  if (fetcher.formData?.has('theme')) {
-    theme = fetcher.formData.get('theme');
-  }
+  useEffect(() => {
+    try {
+      const storedTheme = localStorage.getItem(THEME_KEY);
+      if (storedTheme) setTheme(storedTheme);
+    } catch {
+      // Storage can be unavailable in private browsing, fall back to dark
+    }
+  }, []);
 
   function toggleTheme(newTheme) {
-    fetcher.submit(
-      { theme: newTheme ? newTheme : theme === 'dark' ? 'light' : 'dark' },
-      { action: '/api/set-theme', method: 'post' }
-    );
+    const nextTheme = newTheme ? newTheme : theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+
+    try {
+      localStorage.setItem(THEME_KEY, nextTheme);
+    } catch {
+      // The theme still applies for this visit without storage
+    }
   }
 
   useEffect(() => {
@@ -114,9 +93,10 @@ export default function App() {
         <style dangerouslySetInnerHTML={{ __html: themeStyles }} />
         <Meta />
         <Links />
-        <link rel="canonical" href={canonicalUrl} />
+        <link rel="canonical" href={config.url} />
       </head>
-      <body data-theme={theme}>
+      <body data-theme={theme} suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <ThemeProvider theme={theme} toggleTheme={toggleTheme}>
           <Progress />
           <VisuallyHidden showOnFocus as="a" className={styles.skip} href="#main-content">

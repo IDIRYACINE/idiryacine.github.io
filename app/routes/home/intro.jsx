@@ -12,6 +12,8 @@ import { cssProps } from '~/utils/style';
 import config from '~/config.json';
 import { useHydrated } from '~/hooks/useHydrated';
 import styles from './intro.module.css';
+// Lazy chunk styles aren't injected in the static SPA build, so load them up front
+import './displacement-sphere.module.css';
 
 const DisplacementSphere = lazy(() =>
   import('./displacement-sphere').then(module => ({ default: module.DisplacementSphere }))

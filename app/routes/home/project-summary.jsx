@@ -13,6 +13,8 @@ import { cssProps, media } from '~/utils/style';
 import { useHydrated } from '~/hooks/useHydrated';
 import katakana from './katakana.svg';
 import styles from './project-summary.module.css';
+// Lazy chunk styles aren't injected in the static SPA build, so load them up front
+import '~/components/model/model.module.css';
 
 const Model = lazy(() =>
   import('~/components/model').then(module => ({ default: module.Model }))
@@ -24,7 +26,9 @@ export function ProjectSummary({
   sectionRef,
   index,
   title,
+  context,
   description,
+  tags = [],
   model,
   buttonText,
   buttonLink,
@@ -77,6 +81,11 @@ export function ProjectSummary({
             {indexText}
           </span>
         </div>
+        {context && (
+          <Text className={styles.context} data-visible={visible} size="s" as="p">
+            {context}
+          </Text>
+        )}
         <Heading
           level={3}
           as="h2"
@@ -89,11 +98,22 @@ export function ProjectSummary({
         <Text className={styles.description} data-visible={visible} as="p">
           {description}
         </Text>
-        <div className={styles.button} data-visible={visible}>
-          <Button iconHoverShift href={buttonLink} iconEnd="arrow-right">
-            {buttonText}
-          </Button>
-        </div>
+        {tags.length > 0 && (
+          <ul className={styles.tags} data-visible={visible} aria-label="Outcomes">
+            {tags.map(tag => (
+              <li className={styles.tag} key={tag}>
+                {tag}
+              </li>
+            ))}
+          </ul>
+        )}
+        {buttonLink && (
+          <div className={styles.button} data-visible={visible}>
+            <Button iconHoverShift href={buttonLink} iconEnd="arrow-right">
+              {buttonText}
+            </Button>
+          </div>
+        )}
       </div>
     );
   }

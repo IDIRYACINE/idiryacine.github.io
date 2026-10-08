@@ -23,11 +23,16 @@
     margin-bottom: 0;
   }
 
+  /* Keep the first device model clear of the intro title */
   &[data-first='true'] {
-    margin-top: 0;
+    margin-top: var(--space5XL);
 
     @media (--mediaTablet) {
-      margin-top: 0;
+      margin-top: var(--space4XL);
+    }
+
+    @media (--mediaMobile) {
+      margin-top: var(--space3XL);
     }
   }
 }
@@ -102,11 +107,20 @@
       --width: 180%;
     }
 
+    /* Mirror the laptop when it sits left of the text so it doesn't cover it */
+    .summary[data-alternate='true'] & {
+      left: -20%;
+    }
+
     @media (--mediaTablet) {
       --width: 140%;
 
       top: 10%;
       left: 0;
+
+      .summary[data-alternate='true'] & {
+        left: 0;
+      }
     }
   }
 
@@ -163,6 +177,11 @@
     right: -36%;
     bottom: 24%;
     transform: translateY(50%);
+
+    .summary[data-alternate='true'] & {
+      right: auto;
+      left: -8%;
+    }
 
     @media (--mediaTablet) {
       width: 80%;
@@ -255,6 +274,52 @@
     transform: none;
     opacity: 1;
   }
+}
+
+.context {
+  margin-bottom: var(--spaceS);
+  color: var(--textLight);
+  transition-property: opacity;
+  transition-timing-function: var(--bezierFastoutSlowin);
+  transition-duration: var(--durationXL);
+  transition-delay: var(--durationM);
+  opacity: 0;
+
+  &[data-visible='true'] {
+    opacity: 1;
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spaceS);
+  margin: 0 0 var(--spaceXL);
+  padding: 0;
+  list-style: none;
+  transition-property: opacity;
+  transition-timing-function: var(--bezierFastoutSlowin);
+  transition-duration: var(--durationXL);
+  transition-delay: var(--durationL);
+  opacity: 0;
+
+  @media (--mediaUseMotion) {
+    transition-property: transform, opacity;
+    transform: translate3d(0, var(--spaceL), 0);
+  }
+
+  &[data-visible='true'] {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.tag {
+  font-size: var(--fontSizeBodyS);
+  font-weight: var(--fontWeightMedium);
+  color: var(--primary);
+  padding: var(--spaceXS) var(--spaceS);
+  border: 1px solid color-mix(in lab, var(--primary) 40%, transparent);
 }
 
 .button {

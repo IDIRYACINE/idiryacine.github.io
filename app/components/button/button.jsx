@@ -7,7 +7,8 @@ import { classes } from '~/utils/style';
 import styles from './button.module.css';
 
 function isExternalLink(href) {
-  return href?.includes('://');
+  // Static files like the resume pdf aren't app routes
+  return href?.includes('://') || href?.endsWith('.pdf');
 }
 
 export const Button = forwardRef(({ href, ...rest }, ref) => {

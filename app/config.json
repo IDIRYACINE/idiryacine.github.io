@@ -1,11 +1,17 @@
 {
-  "name": "Hamish Williams",
-  "role": "Designer",
-  "disciplines": ["Developer", "Prototyper", "Animator", "Illustrator", "Modder"],
-  "url": "https://hamishw.com",
-  "bluesky": "hamishw.com",
-  "figma": "@Hamish",
-  "github": "HamishMW",
-  "repo": "https://github.com/HamishMW/portfolio",
-  "ascii": "__  __  __\n\u005C \u005C \u005C \u005C \u005C\u2215\n \u005C \u005C\u2215\u005C \u005C\n  \u005C\u2215  \u005C\u2215\n"
+  "name": "Idir Yacine",
+  "role": "Fullstack",
+  "disciplines": [
+    "AI Engineer",
+    "Tech Lead",
+    "Product",
+    "Problem Solver"
+  ],
+  "url": "https://idiryacine.github.io",
+  "email": "idiryacinesp@gmail.com",
+  "github": "IDIRYACINE",
+  "repo": "https://github.com/IDIRYACINE/idiryacine.github.io",
+  "designer": "Hamish Williams",
+  "designerUrl": "https://github.com/HamishMW/portfolio",
+  "ascii": " _   _   _\n| | \\ \\ / /\n| |  \\ V /\n| |   | |\n|_|   |_|\n"
 }

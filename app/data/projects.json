@@ -1,0 +1,62 @@
+{
+    "projects": [
+        {
+            "slug": "infraxcode",
+            "name": "From concept to shipped AI product",
+            "context": "Infraxcode · Tech Lead",
+            "device": "laptop",
+            "description": "Led a team of three through product discovery and six rapid product-vision iterations to ship an AI developer-tools product, and set up an AI-assisted workflow that speeds up every delivery cycle.",
+            "outcomes": ["6 iterations to direction", "3-engineer team", "Faster delivery cycles"],
+            "actions": {}
+        },
+        {
+            "slug": "medical-ai",
+            "name": "Leaner AI for medical imaging",
+            "context": "PhD research · ML/AI",
+            "device": "laptop",
+            "description": "Designed a compact CNN architecture and a more efficient attention mechanism, so clinical models get more accurate while needing less compute.",
+            "outcomes": ["+7% classification accuracy", "Lower GFLOPs, same accuracy"],
+            "actions": {}
+        },
+        {
+            "slug": "ibdapro",
+            "name": "A government-grade platform, delivered",
+            "context": "Ibdapro · Lead Developer",
+            "device": "laptop",
+            "description": "Led planning, design and delivery of three projects, including a multi-tenant platform where every region runs as a legally separate entity, with faster responses on the busiest requests.",
+            "outcomes": ["3 projects delivered", "Legal-entity isolation", "Real-time features"],
+            "actions": {}
+        },
+        {
+            "slug": "anfashion",
+            "name": "Turning around a stalled e-commerce business",
+            "context": "AnFashion · Consultant",
+            "device": "laptop",
+            "description": "Resolved a year-long deadlock between a national clothing franchise and its development agency, took over the infrastructure and migrated the store to a platform the business could rely on.",
+            "outcomes": ["−60% running costs", "Year-long blocker resolved"],
+            "actions": {
+                "website": "https://www.anfashion.dz"
+            }
+        },
+        {
+            "slug": "hader",
+            "name": "Co-founding and shipping a product",
+            "context": "Hader · Co-founder",
+            "device": "phone",
+            "description": "Co-founded the company and built its role-based platform and mobile apps, making the product feel instant and catching crashes before users report them.",
+            "outcomes": ["2 apps on the Play Store", "Instant-feeling UI"],
+            "actions": {}
+        },
+        {
+            "slug": "oilucode",
+            "name": "Reviving a stalled patent project",
+            "context": "OiluCode · Research Engineer",
+            "device": "laptop",
+            "description": "Completed a computer-vision project that had stalled for two years, with a homography-free marker detection algorithm fast enough for real time.",
+            "outcomes": ["2–10ms detection", "US patent pending"],
+            "actions": {
+                "github": "https://github.com/OiluProject/OiluTag"
+            }
+        }
+    ]
+}
