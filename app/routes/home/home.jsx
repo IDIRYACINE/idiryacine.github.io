@@ -64,8 +64,7 @@ const sideProjectsSection = {
   description: 'Hackathons, community tools and experiments outside of client work.',
 };
 
-// Side projects are ready but hidden until there's more to show
-const showSideProjects = false;
+const showSideProjects = true;
 
 // Only the first render of the home page after a document load should reset scroll
 let hasLanded = false;
