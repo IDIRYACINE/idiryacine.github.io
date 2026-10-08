@@ -28,6 +28,7 @@ export function ProjectSummary({
   index,
   title,
   context,
+  grade,
   description,
   tags = [],
   model,
@@ -79,9 +80,20 @@ export function ProjectSummary({
             collapseDelay={1000}
           />
           <span className={styles.indexNumber} data-visible={visible}>
-            {indexText}
+            <span className={styles.report}>任務報告書</span>
+            {`Mission No.${indexText}`}
           </span>
         </div>
+        {grade && (
+          <span
+            className={styles.stamp}
+            data-visible={visible}
+            aria-label={`Grade: ${grade}`}
+            role="img"
+          >
+            {grade}
+          </span>
+        )}
         {context && (
           <Text className={styles.context} data-visible={visible} size="s" as="p">
             {context}

@@ -17,6 +17,10 @@ const baseTokens = {
     'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
   japaneseFontStack:
     'IPA Gothic, ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, Hiragino Sans, Osaka, メイリオ, Meiryo, Segoe UI, sans-serif',
+  // Manga cover lettering, title card kanji and heavy SFX kanji
+  fontDisplay: `Anton, Impact, 'Arial Narrow', sans-serif`,
+  fontMincho: `'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif`,
+  fontSfx: `'Dela Gothic One', 'Hiragino Kaku Gothic Pro', sans-serif`,
   fontWeightRegular: 400,
   fontWeightMedium: 500,
   fontWeightBold: 700,
@@ -107,29 +111,29 @@ const tokensMobileSmall = {
 };
 
 // Tokens that change based on theme
-// Malevolent Shrine: soot black with a blood undertone, crimson and bone
+// Anime title card: black frame, paper-white ink, vermilion only for seals
 const dark = {
-  background: 'oklch(14.5% 0.012 20)',
-  backgroundLight: 'oklch(19% 0.018 20)',
-  primary: 'oklch(60% 0.215 27)',
-  accent: 'oklch(60% 0.215 27)',
-  error: 'oklch(70% 0.17 60)',
-  text: 'oklch(93% 0.018 80)',
+  background: 'oklch(13% 0.003 270)',
+  backgroundLight: 'oklch(19% 0.004 270)',
+  primary: 'oklch(95% 0.01 90)',
+  accent: 'oklch(62% 0.2 30)',
+  error: 'oklch(62% 0.2 30)',
+  text: 'oklch(95% 0.01 90)',
   textTitle: 'var(--text)',
-  textBody: 'color-mix(in lab, var(--text) 80%, transparent)',
+  textBody: 'color-mix(in lab, var(--text) 82%, transparent)',
   textLight: 'color-mix(in lab, var(--text) 60%, transparent)',
 };
 
-// Shrine paper with crimson and ink
+// Manga page: newsprint and black ink, vermilion only for hanko seals
 const light = {
-  background: 'oklch(93.5% 0.018 80)',
-  backgroundLight: 'oklch(96.5% 0.012 80)',
-  primary: 'oklch(22% 0.02 20)',
-  accent: 'oklch(50% 0.2 27)',
-  error: 'oklch(50% 0.2 27)',
-  text: 'oklch(18% 0.015 20)',
-  textTitle: 'color-mix(in lab, var(--text) 92%, transparent)',
-  textBody: 'color-mix(in lab, var(--text) 78%, transparent)',
+  background: 'oklch(95.8% 0.008 90)',
+  backgroundLight: 'oklch(98.5% 0.004 90)',
+  primary: 'oklch(17% 0.004 270)',
+  accent: 'oklch(55% 0.2 30)',
+  error: 'oklch(55% 0.2 30)',
+  text: 'oklch(17% 0.004 270)',
+  textTitle: 'var(--text)',
+  textBody: 'color-mix(in lab, var(--text) 82%, transparent)',
   textLight: 'color-mix(in lab, var(--text) 58%, transparent)',
 };
 

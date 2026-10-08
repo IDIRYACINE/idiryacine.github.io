@@ -66,12 +66,21 @@ export function Intro({ id, sectionRef, scrollIndicatorHidden, ...rest }) {
       <Transition in key={theme} timeout={3000}>
         {({ visible, status }) => (
           <>
-            {isHydrated && (
-              <Suspense>
-                <DisplacementSphere className={sphereStyles.canvas} />
-              </Suspense>
-            )}
+            <div className={styles.backdrop} data-visible={visible}>
+              {/* The sphere rendered in ink tones to match the manga palette */}
+              <div className={styles.ink}>
+                {isHydrated && (
+                  <Suspense>
+                    <DisplacementSphere className={sphereStyles.canvas} />
+                  </Suspense>
+                )}
+              </div>
+            </div>
             <header className={styles.text}>
+              <p className={styles.chapter} data-visible={visible}>
+                <span className={styles.chapterKanji}>第零話</span>
+                Prologue
+              </p>
               <h1 className={styles.name} data-visible={visible} id={titleId}>
                 <DecoderText text={config.name} delay={500} />
               </h1>

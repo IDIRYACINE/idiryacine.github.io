@@ -65,6 +65,20 @@
 .details {
   z-index: var(--zIndex1);
   position: relative;
+  /* An inked manga panel with a hard offset shadow */
+  padding: var(--spaceXL);
+  border: var(--inkBorder);
+  background-color: var(--backgroundLight);
+  box-shadow: 10px 10px 0 var(--text);
+
+  & > * {
+    position: relative;
+  }
+
+  @media (--mediaMobile) {
+    padding: var(--spaceL);
+    box-shadow: 6px 6px 0 var(--text);
+  }
 
   @media (--mediaTablet) {
     flex: 0 0 auto;
@@ -210,11 +224,23 @@
   gap: var(--spaceM);
   align-items: center;
   margin-bottom: var(--spaceXL);
+
+  @media (--mediaMobile) {
+    grid-template-columns: 40px 1fr;
+    padding-right: var(--space2XL);
+  }
 }
 
 .indexNumber {
-  font-size: var(--fontSizeBodyS);
-  font-weight: var(--fontWeightMedium);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  white-space: nowrap;
+  gap: var(--spaceS);
+  font-family: var(--fontDisplay);
+  font-size: 16px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--primary);
   opacity: 0;
   transition-property: opacity;
@@ -233,8 +259,62 @@
   }
 }
 
+.report {
+  white-space: nowrap;
+  font-family: var(--fontMincho);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+/* Hanko seal carrying the mission grade, stamped down on reveal */
+.stamp {
+  position: absolute !important;
+  top: -26px;
+  right: -22px;
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  padding: 6px;
+  font-family: var(--fontMincho);
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1;
+  writing-mode: vertical-rl;
+  color: var(--accent);
+  border: 3px solid var(--accent);
+  outline: 1px solid var(--accent);
+  outline-offset: -8px;
+  border-radius: 6px;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='1 1 1 0.35'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0;
+  transform: rotate(-12deg) scale(1.8);
+  transition:
+    opacity 0.15s ease 1.1s,
+    transform 0.25s cubic-bezier(0.5, 0, 0.6, 1.6) 1.1s;
+
+  &[data-visible='true'] {
+    opacity: 0.92;
+    transform: rotate(-12deg) scale(1);
+  }
+
+  @media (--mediaMobile) {
+    top: -20px;
+    right: -10px;
+    width: 64px;
+    height: 64px;
+    font-size: 21px;
+  }
+}
+
 .title {
   margin-bottom: var(--spaceL);
+  font-family: var(--fontDisplay);
+  font-weight: 400;
+  font-size: clamp(32px, 3.2vw, 46px);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
   transition-property: opacity;
   transition-timing-function: var(--bezierFastoutSlowin);
   transition-duration: var(--durationXL);
@@ -309,12 +389,26 @@
   }
 }
 
+/* Outcomes as paper talisman slips with a red seal mark */
 .tag {
+  position: relative;
   font-size: var(--fontSizeBodyS);
   font-weight: var(--fontWeightMedium);
-  color: var(--primary);
-  padding: var(--spaceXS) var(--spaceS);
-  border: 1px solid color-mix(in lab, var(--primary) 40%, transparent);
+  color: var(--text);
+  padding: var(--spaceXS) var(--spaceS) var(--spaceXS) calc(var(--spaceS) + 14px);
+  background-color: var(--background);
+  border: 1px solid var(--text);
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    background-color: var(--accent);
+    transform: translateY(-50%) rotate(45deg);
+  }
 }
 
 .button {

@@ -15,8 +15,9 @@ DESIGN
 Based on the open source portfolio by Hamish Williams
 github.com/HamishMW/portfolio
 
-Fan theme inspired by Jujutsu Kaisen: Malevolent Shrine (伏魔御廚子),
-領域展開 (Domain Expansion), 解 Dismantle and 捌 Cleave
+Fan theme inspired by Jujutsu Kaisen, styled as a manga volume:
+episode title cards, mission reports and a sorcerer registration card.
+Display type: Anton, Shippori Mincho B1 and Dela Gothic One (SIL OFL 1.1)
 
 _______________________________________________________________________________
 

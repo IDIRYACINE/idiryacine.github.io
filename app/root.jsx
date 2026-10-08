@@ -15,8 +15,6 @@ import { Error } from '~/layouts/error';
 import { VisuallyHidden } from '~/components/visually-hidden';
 import { Navbar } from '~/layouts/navbar';
 import { Progress } from '~/components/progress';
-import { DomainExpansion, domainExpansionScript } from '~/components/domain-expansion';
-import { Cleave } from '~/components/cleave';
 import config from '~/config.json';
 import { baseMeta } from '~/utils/meta';
 import styles from './root.module.css';
@@ -61,21 +59,21 @@ const THEME_KEY = 'theme';
 const themeScript = `try{var t=localStorage.getItem('${THEME_KEY}');if(t)document.body.dataset.theme=t}catch(e){}`;
 
 // The document shell: Remix prerenders this into index.html and keeps it mounted
-// through hydration, so the theme and the Domain Expansion intro never flash
+// through hydration, so the stored theme never flashes
 export function Layout({ children }) {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
     try {
       const storedTheme = localStorage.getItem(THEME_KEY);
       if (storedTheme) setTheme(storedTheme);
     } catch {
-      // Storage can be unavailable in private browsing, fall back to dark
+      // Storage can be unavailable in private browsing, fall back to light
     }
   }, []);
 
   function toggleTheme(newTheme) {
-    const nextTheme = newTheme ? newTheme : theme === 'dark' ? 'light' : 'dark';
+    const nextTheme = newTheme ? newTheme : theme === 'light' ? 'dark' : 'light';
     setTheme(nextTheme);
 
     try {
@@ -90,9 +88,8 @@ export function Layout({ children }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script dangerouslySetInnerHTML={{ __html: domainExpansionScript }} />
         {/* Theme color doesn't support oklch so I'm hard coding these hexes for now */}
-        <meta name="theme-color" content={theme === 'dark' ? '#0f0808' : '#f0e8dc'} />
+        <meta name="theme-color" content={theme === 'dark' ? '#0b0b0c' : '#f3f1ea'} />
         <meta
           name="color-scheme"
           content={theme === 'light' ? 'light dark' : 'dark light'}
@@ -105,8 +102,6 @@ export function Layout({ children }) {
       <body data-theme={theme} suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <ThemeProvider theme={theme} toggleTheme={toggleTheme}>
-          <DomainExpansion />
-          <Cleave />
           {children}
         </ThemeProvider>
         <ScrollRestoration />
