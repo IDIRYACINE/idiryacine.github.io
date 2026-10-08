@@ -1,0 +1,169 @@
+{
+    "projects": [
+        {
+            "slug": "infraxcode",
+            "category": "software",
+            "name": "From concept to shipped AI product",
+            "context": "Infraxcode · Tech Lead",
+            "device": "laptop",
+            "description": "Lead a team of three reporting to the CTO, taking an AI developer-tools product through discovery and six rapid product-vision iterations, and building it hands-on: a VS Code extension and Electron app on the Claude Agent SDK, plus an MCP server that lets AI agents query business data. Also co-led delivery and the mobile and web redesign of Bebop.",
+            "outcomes": [
+                "6 iterations to direction",
+                "3-engineer team",
+                "Bebop redesign co-led"
+            ],
+            "actions": {}
+        },
+        {
+            "slug": "ibdapro",
+            "category": "software",
+            "name": "A government-grade platform, delivered",
+            "context": "Ibdapro · Lead Developer",
+            "device": "phone",
+            "description": "Led planning, design and delivery of three projects, including a government-grade platform where every region runs as a legally separate entity behind one reverse proxy. Migrated the legacy backend to NestJS, made the busiest requests faster with Redis and PostgreSQL tuning, added real-time chat and encrypted file storage, and shipped two Flutter apps.",
+            "outcomes": [
+                "3 projects delivered",
+                "2 apps on the Play Store",
+                "Legal-entity isolation"
+            ],
+            "actions": {}
+        },
+        {
+            "slug": "anfashion",
+            "category": "software",
+            "name": "Turning around a stalled e-commerce business",
+            "context": "AnFashion · Consultant",
+            "device": "laptop",
+            "description": "Resolved a year-long deadlock between a national clothing franchise and its development agency, took over the full infrastructure and led the migration to Magento 2, including mail-server recovery and the .dz domain setup.",
+            "outcomes": [
+                "−60% running costs",
+                "Year-long blocker resolved"
+            ],
+            "actions": {
+                "website": "https://www.anfashion.dz"
+            }
+        },
+        {
+            "slug": "hader",
+            "category": "software",
+            "name": "Co-founding and shipping a product",
+            "context": "Hader · Co-founder",
+            "device": "laptop",
+            "description": "Co-founded a pharmaceutical distribution platform and co-led its team of five developers. Built the role-based web app and two Flutter apps, made the product feel instant with caching and optimistic updates, caught crashes before users reported them, and self-hosted Odoo for internal operations.",
+            "outcomes": [
+                "Co-led 5 developers",
+                "2 apps on the Play Store",
+                "Instant-feeling UI"
+            ],
+            "actions": {}
+        },
+        {
+            "slug": "convlatticenet",
+            "category": "ai",
+            "name": "ResNet-18 accuracy at a hundredth of the size",
+            "context": "Research · ConvLatticeNet",
+            "device": "laptop",
+            "description": "Designed a 97K-parameter network for small, class-imbalanced medical datasets. It matches or beats the ResNet-18 benchmark on all six MedMNIST tasks with about a hundredth of the parameters, and stays accurate where published lightweight networks lose up to eight AUC points.",
+            "stat": {
+                "value": "1/100",
+                "label": "the parameters, ResNet-18 accuracy"
+            },
+            "outcomes": [
+                "≥ ResNet-18 on 6 of 6 datasets",
+                "97K parameters",
+                "480 controlled runs"
+            ],
+            "actions": {}
+        },
+        {
+            "slug": "dictnet",
+            "category": "ai",
+            "name": "Accurate models from a few hundred images",
+            "context": "Research · DictNet",
+            "device": "laptop",
+            "description": "Built an 82K-parameter network whose first stage is constructed before training instead of learned, so it needs no pretrained weights and beats every from-scratch baseline on every seed across three medical tasks.",
+            "stat": {
+                "value": "+10.5",
+                "label": "AUC over from-scratch baselines"
+            },
+            "outcomes": [
+                "+2.6 to +10.5 AUC",
+                "82K parameters",
+                "No pretraining needed"
+            ],
+            "actions": {}
+        },
+        {
+            "slug": "head-ablation",
+            "category": "ai",
+            "name": "Catching a flaw standard metrics hide",
+            "context": "Research · Retinopathy grading",
+            "device": "laptop",
+            "description": "Ran a five-factor ablation across four medical tasks showing that a common classifier-head design misgrades diabetic retinopathy further along the severity scale, a harm invisible to F1 and AUC, and that a single linear classifier matches heads 743× its size.",
+            "stat": {
+                "value": "743×",
+                "label": "smaller classifier head, same accuracy"
+            },
+            "outcomes": [
+                "Hidden harm exposed",
+                "743× smaller head",
+                "5-factor ablation"
+            ],
+            "actions": {}
+        },
+        {
+            "slug": "oilucode",
+            "category": "ai",
+            "name": "Reviving a stalled patent project",
+            "context": "OiluCode · Research Engineer",
+            "device": "laptop",
+            "description": "Completed a computer-vision project that had stalled for two years: a homography-free fiducial-marker algorithm in C++ fast enough for real time, wired through JNI into a Java Android app with OGRE 3D rendering.",
+            "outcomes": [
+                "2–10ms detection",
+                "US patent pending"
+            ],
+            "actions": {
+                "github": "https://github.com/OiluProject/OiluTag"
+            }
+        },
+        {
+            "slug": "dive-club",
+            "category": "side",
+            "name": "Dive Club",
+            "context": "Regional swimming league",
+            "description": "Automated regional swimming competitions, making results more transparent and accurate.",
+            "outcomes": [
+                "Sponsored by the regional league"
+            ],
+            "actions": {
+                "github": "https://github.com/IDIRYACINE/dive-club"
+            }
+        },
+        {
+            "slug": "death-note",
+            "category": "side",
+            "name": "Death Note",
+            "context": "International hackathon",
+            "description": "An AI-driven web experience built on OpenAI and DALL·E for the Convex / WebDevCody hackathon.",
+            "outcomes": [
+                "Hackathon entry"
+            ],
+            "actions": {
+                "github": "https://github.com/IDIRYACINE/death-note-hackathon"
+            }
+        },
+        {
+            "slug": "agritech",
+            "category": "side",
+            "name": "Agritech",
+            "context": "National seminar",
+            "description": "Digitized organization and participant management for a national university seminar with a dedicated app and website.",
+            "outcomes": [
+                "App + website"
+            ],
+            "actions": {
+                "website": "https://agritech-seminar.vercel.app/"
+            }
+        }
+    ]
+}

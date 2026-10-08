@@ -1,0 +1,25 @@
+The humans.txt file explains the team, technology,
+and graphic assets behind this site humanstxt.org.
+
+_______________________________________________________________________________
+
+DEVELOPER
+
+Idir Yacine
+github.com/IDIRYACINE
+
+_______________________________________________________________________________
+
+DESIGN
+
+Based on the open source portfolio by Hamish Williams
+github.com/HamishMW/portfolio
+
+_______________________________________________________________________________
+
+TECHNOLOGY
+
+React
+Remix
+Three.js
+Framer Motion

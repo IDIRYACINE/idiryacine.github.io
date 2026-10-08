@@ -1,0 +1,220 @@
+%-------------------------
+% CV in LaTeX  —  ML / Full-Stack lane (base)
+% Author: Gabriel Sison
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,
+            urlcolor=blue,
+            linkcolor=black,
+            citecolor=black,
+            breaklinks=true
+]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{multicol}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-15pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{0pt}]
+
+\pdfgentounicode=1
+
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-3pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+    \end{tabular*}\vspace{-2pt}
+}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{0pt}}
+
+\renewcommand{\maketitle}{
+    \noindent
+    {\huge\textbf{IDIR, YACINE}}
+    \hfill
+
+    \noindent
+    {\large{ML / Full-Stack Engineer}}
+    \hfill
+    \href{mailto:idiryacinesp@gmail.com}{Email: idiryacinesp@gmail.com}
+
+    \noindent
+    \href{https://github.com/IDIRYACINE}{Github: github.com/IDIRYACINE}
+    \hfill
+    \href{tel:+213540675611}{Mobile: +213 540 67 56 11}
+
+    \noindent
+    PhD in Deep Learning for Medical Image Analysis
+    \hfill
+    \href{https://www.linkedin.com/in/idir-yacine-462b12221/}{LinkedIn: idir-yacine}
+
+    \noindent
+    Remote --- UTC+1 (full CET overlap) --- contractor-ready (Deel / Remote)
+    \hfill
+
+}
+
+\begin{document}
+\maketitle
+
+\section{Summary}
+{\small PhD-trained deep-learning engineer who also ships production systems end to end. Designed compact medical-imaging networks that match ResNet-18 accuracy at $\sim$1/100 of the parameters, while building multi-tenant web platforms, real-time services, and shipped mobile apps. Now leading a small engineering team on an AI developer-tools product.}
+\vspace{4pt}
+
+\section{Education}
+\resumeItemListStart
+\resumeItem{PhD, Deep Learning for Medical Image Analysis --- Mohammed El Bachir Ibrahimi University, Algeria, 2025}
+\resumeItem{MSc, Business Intelligence --- Mohammed El Bachir Ibrahimi University, Algeria, 2024}
+\resumeItem{BSc, Computer Science --- Mohammed El Bachir Ibrahimi University, Algeria, 2022}
+\resumeItemListEnd
+
+\section{Professional Experience}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\textbf{Infraxcode $|$ Tech Lead} (Hybrid --- Algiers / France)}{June 2026 -- Present}
+\resumeItemListStart
+\resumeItem{Lead a team of \textbf{3 developers} reporting directly to the \textbf{CTO}; own \textbf{agile planning}, prioritization, scheduling, and the mentoring and growth of the team.}
+\resumeItem{Own \textbf{product discovery} and \textbf{market research}, turning early-stage concepts into shipped products across \textbf{6 rapid product-vision iterations} to reach the current direction.}
+\resumeItem{Set \textbf{technical direction} and tooling to accelerate delivery cycles; established onboarding guidelines and a standardized \textbf{AI-assisted workflow} that maximizes team productivity with \textbf{Claude Code}.}
+\resumeItem{Build the product hands-on: a \textbf{VS Code extension} and \textbf{Electron} desktop app powered by the \textbf{Claude Agent SDK}.}
+\resumeItem{Delivered an \textbf{MCP server} integration for \textbf{business intelligence}, letting AI agents query and analyze business data.}
+\resumeItem{Co-led delivery on \textbf{Bebop} alongside the CTO and a fellow lead, contributing bug fixes, new features, and the \textbf{redesign} of the \textbf{mobile and web apps}.}
+\resumeItem{Run internal \textbf{feedback analysis} to steer product direction, closing the loop between discovery, build, and iteration.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{Hader $|$ Co-founder \& Full-Stack Developer}}{September 2025 -- June 2026}
+\resumeItemListStart
+\resumeItem{Improved performance by implementing \textbf{caching} through \textbf{Tanstack Query} and \textbf{optimistic updates} on successful API calls.}
+\resumeItem{Integrated \textbf{Firebase} crash analytics and \textbf{push notifications}.}
+\resumeItem{Architected a complex role-based web app using \textbf{Tanstack Router} and \textbf{custom role-check hooks}.}
+\resumeItem{\textbf{Dockerized} and deployed an \textbf{Odoo} instance for internal enterprise needs, using \textbf{Dokploy} on a \textbf{Hetzner Cloud VPS}.}
+\resumeItem{Implemented a scalable \textbf{REST API} service layer with \textbf{Axios} for better readability and re-usability.}
+\resumeItem{Built a responsive dashboard using \textbf{Tailwind CSS} and \textbf{Mantine}.}
+\resumeItem{Implemented dynamic filters and pagination using \textbf{Ag-Grid} and \textbf{Tanstack Query}.}
+\resumeItem{Used hybrid state management --- \textbf{Zustand} for global state and \textbf{Context} for screen-scoped data --- to avoid memory degradation on large datasets.}
+\resumeItem{Developed and shipped 2 \textbf{Flutter} apps to the \href{https://play.google.com/store/apps/details?id=com.hader.pharma&hl=en}{\textbf{Play Store}}.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{Ibdapro $|$ Lead Developer}}{February 2025 -- September 2025}
+\resumeItemListStart
+\resumeItem{Led planning, design, and delivery of \textbf{3 projects}, including a \textbf{government-grade} platform.}
+\resumeItem{Improved \textbf{PostgreSQL} performance via \textbf{indexes} and \textbf{materialized views}.}
+\resumeItem{Implemented real-time chat using \textbf{WebSockets}.}
+\resumeItem{Migrated a legacy \textbf{Node.js / Express.js} codebase to \textbf{NestJS}, improving maintainability and scalability.}
+\resumeItem{Implemented encrypted file reads and uploads using \textbf{AES} encryption.}
+\resumeItem{Designed and implemented a responsive dashboard using \textbf{Ant Design} and \textbf{Tailwind CSS}.}
+\resumeItem{Built a \textbf{reverse proxy} routing API requests to \textbf{region-based instances}, each representing a legally separate entity.}
+\resumeItem{Implemented \textbf{Redis} caching to improve API performance on critical, high-frequency requests.}
+\resumeItem{Developed and shipped 2 \textbf{Flutter} apps to the \href{https://play.google.com/store/apps/dev?id=4999982593960140954\&hl=en}{\textbf{Play Store}}.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{OiluCode} $|$ Computer Vision Research Engineer}{February 2024 -- September 2024}
+\resumeItemListStart
+\resumeItem{Developed a \textbf{Java Android} app with 3D rendering using OGRE.}
+\resumeItem{Built \textbf{JNI} wrappers to communicate with custom \textbf{native C++ binaries}.}
+\resumeItem{Completed a computer-vision project pending \textbf{U.S. patent (63/199,424)}.}
+\resumeItem{Developed a \textbf{homography-free algorithm} for fiducial markers in \textbf{C++} running at \textbf{2--10 ms}.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%%%%%%%%%%%%%%%%  Research (promoted for ML lane)  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Research}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{ConvLatticeNet --- Compact CNN for Imbalanced Medical Imaging}{2025 -- 2026}
+\resumeItemListStart
+\resumeItem{Designed a \textbf{97K-parameter} network for small, class-imbalanced medical datasets that matches or beats \textbf{ResNet-18} on \textbf{all 6 MedMNIST} tasks with $\sim$\textbf{1/100} of the parameters.}
+\resumeItem{Stays accurate where published lightweight networks lose up to \textbf{8 AUC points}; validated across \textbf{480 controlled runs}.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{DictNet --- Data-Efficient Learning Without Pretraining}{2025 -- 2026}
+\resumeItemListStart
+\resumeItem{Built an \textbf{82K-parameter} network whose first stage is constructed before training instead of learned, removing the need for \textbf{pretrained weights}.}
+\resumeItem{Beats every from-scratch baseline on every seed across \textbf{3 medical tasks}, by \textbf{+2.6 to +10.5 AUC}.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{Classifier-Head Ablation for Retinopathy Grading}{2025 -- 2026}
+\resumeItemListStart
+\resumeItem{Ran a \textbf{5-factor ablation} across \textbf{4 medical tasks}, showing a common classifier-head design misgrades \textbf{diabetic retinopathy} further along the severity scale --- a harm invisible to \textbf{F1} and \textbf{AUC}.}
+\resumeItem{Showed a single linear classifier matches heads \textbf{743$\times$} its size.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+\section{Freelance / Consulting}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\textbf{Sarl Belmanaa} $|$ Odoo Integrator}{October 2024 -- November 2024}
+\resumeItemListStart
+\resumeItem{Delivered an in-house \textbf{Odoo ERP} integration, cutting annual operating costs by \textbf{$\sim$\$38K (USD equiv.)}.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{AnFashion} $|$ Consultant \& Systems Migration Lead}{September 2023 -- February 2024}
+\resumeItemListStart
+\resumeItem{Resolved a year-long technical conflict between the company and its development agency.}
+\resumeItem{Managed full infrastructure, reducing monthly running costs by \textbf{$\sim$60\%}.}
+\resumeItem{Led a complex migration to \textbf{Magento 2}, including mail-server recovery and \textbf{.dz} domain configuration.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+\end{document}
