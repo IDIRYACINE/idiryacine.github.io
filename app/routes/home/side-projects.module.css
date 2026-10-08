@@ -23,8 +23,7 @@
 .card {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: var(--spaceXL);
+  overflow: hidden;
   background-color: color-mix(in lab, var(--text) 4%, transparent);
   opacity: 0;
   transition-property: opacity;
@@ -41,6 +40,23 @@
     transform: none;
     opacity: 1;
   }
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.body {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--spaceXL);
 }
 
 .context {

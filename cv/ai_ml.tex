@@ -23,7 +23,8 @@
 \usepackage{multicol}
 \setlength{\multicolsep}{-3.0pt}
 \setlength{\columnsep}{-1pt}
-\input{glyphtounicode}
+% pdfTeX-only, skipped under XeTeX/Tectonic so the file builds with either
+\ifdefined\pdfgentounicode\input{glyphtounicode}\fi
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -46,7 +47,7 @@
   \vspace{-15pt}\scshape\raggedright\large\bfseries
 }{}{0em}{}[\color{black}\titlerule \vspace{0pt}]
 
-\pdfgentounicode=1
+\ifdefined\pdfgentounicode\pdfgentounicode=1\fi
 
 \newcommand{\resumeItem}[1]{
   \item\small{
@@ -99,6 +100,7 @@
     \noindent
     Remote --- UTC+1 (full CET overlap) --- contractor-ready (Deel / Remote)
     \hfill
+    \href{https://idiryacine.github.io}{Portfolio: idiryacine.github.io}
 
 }
 

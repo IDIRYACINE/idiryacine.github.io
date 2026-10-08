@@ -12,8 +12,9 @@ import { cssProps } from '~/utils/style';
 import config from '~/config.json';
 import { useHydrated } from '~/hooks/useHydrated';
 import styles from './intro.module.css';
-// Lazy chunk styles aren't injected in the static SPA build, so load them up front
-import './displacement-sphere.module.css';
+// Imported here too so the lazy sphere's styles ship with the page instead of
+// arriving after it renders (a bare side-effect import gets tree-shaken)
+import sphereStyles from './displacement-sphere.module.css';
 
 const DisplacementSphere = lazy(() =>
   import('./displacement-sphere').then(module => ({ default: module.DisplacementSphere }))
@@ -67,7 +68,7 @@ export function Intro({ id, sectionRef, scrollIndicatorHidden, ...rest }) {
           <>
             {isHydrated && (
               <Suspense>
-                <DisplacementSphere />
+                <DisplacementSphere className={sphereStyles.canvas} />
               </Suspense>
             )}
             <header className={styles.text}>

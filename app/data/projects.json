@@ -137,7 +137,8 @@
             ],
             "actions": {
                 "github": "https://github.com/IDIRYACINE/dive-club"
-            }
+            },
+            "image": "/images/side/dive-club.jpg"
         },
         {
             "slug": "death-note",
@@ -150,7 +151,8 @@
             ],
             "actions": {
                 "github": "https://github.com/IDIRYACINE/death-note-hackathon"
-            }
+            },
+            "image": "/images/side/death-note.jpg"
         },
         {
             "slug": "agritech",
@@ -163,7 +165,36 @@
             ],
             "actions": {
                 "website": "https://agritech-seminar.vercel.app/"
-            }
+            },
+            "image": "/images/side/agritech.jpg"
+        },
+        {
+            "slug": "zawya",
+            "category": "side",
+            "name": "Zawya",
+            "context": "Quranic schools",
+            "description": "A desktop and mobile app for running Quranic schools: schedules, attendance and memorization tracking per student, and accounts for school heads and teachers across several schools.",
+            "outcomes": [
+                "Desktop + mobile"
+            ],
+            "actions": {
+                "github": "https://github.com/IDIRYACINE/zawya_islamic"
+            },
+            "image": "/images/side/zawya.jpg"
+        },
+        {
+            "slug": "vinstaverse",
+            "category": "side",
+            "name": "Vinstaverse",
+            "context": "Local clothing shop",
+            "description": "An e-commerce storefront for a local clothing brand, with a bold editorial look and a full shopping flow.",
+            "outcomes": [
+                "Live storefront"
+            ],
+            "actions": {
+                "website": "https://vinstastore.vercel.app/"
+            },
+            "image": "/images/side/vinstaverse.jpg"
         }
     ]
 }
