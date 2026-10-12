@@ -1,0 +1,32 @@
+---
+title: 'Most AI code review is a late spec'
+abstract: 'Most "code review" of AI work isn''t review. It''s writing the spec, late.'
+date: '2026-10-31'
+---
+
+![Most AI code review is a late spec. What human intervention on agent PRs actually consists of.](/images/articles/ai/ai-09-late-spec.png)
+
+*Most AI code review is a late spec. What human intervention on agent PRs actually consists of.*
+
+When humans intervened on agent-written PRs, here's what the work actually was:
+
+- 58% guidance — restating constraints, enforcing project conventions
+- 21% decisions — approve, reject, pick a direction
+- 17% fixing the code themselves
+- 4% mechanics
+
+Nearly 80% of the effort was telling the agent things it should have known before it started.
+
+The standard only shows up when someone objects to something.
+
+That's specification work done at the most expensive moment possible: after the output exists, after the agent has made ~10 decisions on its own, after someone has to read all of it.
+
+If you keep writing the same review comment, it's not a review comment anymore.
+
+It's a rule. Put it where the work starts.
+
+What review comment do you find yourself writing over and over?
+
+## Sources
+
+- MSR '26 Mining Challenge intervention taxonomy, built on the AIDev dataset ([arXiv 2605.22534](https://arxiv.org/abs/2605.22534) and related). Percentages taken from the published abstract.

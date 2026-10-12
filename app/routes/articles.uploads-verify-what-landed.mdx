@@ -1,0 +1,30 @@
+---
+title: 'Uploads: verify what actually landed'
+abstract: 'In my template, file bytes never pass through a use case. And the server never trusts what the client says it uploaded.'
+date: '2026-11-07'
+---
+
+![Bytes go straight from the client to storage. The server only issues the upload target and later checks what actually landed.](/images/articles/architecture-deep-dive/dd-09-uploads.png)
+
+*Bytes go straight from the client to storage. The server only issues the upload target and later checks what actually landed.*
+
+The flow for attaching a file to an item:
+
+1. Ask for an upload target. The client sends the file's declared type and size. The use case checks access and the attachment rules (allowed types, max size, max files per item) and returns a short-lived upload URL.
+
+2. Upload directly. The client sends the bytes straight to storage: Convex storage or S3. The API server isn't in the path.
+
+3. Attach what really landed. The client sends back the storage id. The use case calls fileStorageReader(ctx).stat(storageId) and checks what storage actually holds, its real type and size, not what the client claimed:
+- nothing there, or already attached: UPLOAD_NOT_FOUND
+- breaks a rule: a form error on the right field
+- otherwise: create the attachment with the real metadata
+
+Why it matters:
+
+- the API never buffers large files
+- a client can't claim "a 1 MB PDF" and attach a 2 GB executable
+- the same rules (one shared function) run at step 1 for fast feedback and at step 3 for the real verdict
+
+Validate the intent early. Verify the fact late.
+
+How do you handle uploads: through your server, or around it?

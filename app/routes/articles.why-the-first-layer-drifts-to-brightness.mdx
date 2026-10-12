@@ -1,0 +1,36 @@
+---
+title: 'Why the first layer drifts to brightness'
+abstract: 'Why does a CNN''s first layer, left trainable, get worse on retinal images? I measured where its weights went.'
+date: '2026-10-15'
+---
+
+![Share of first-layer weight that only responds to brightness (DC), before and after training on retinal images.](/images/articles/ml/ml-c02-dc-drift.png)
+
+*Share of first-layer weight that only responds to brightness (DC), before and after training on retinal images.*
+
+I tracked the share of each first-layer filter's weight that is a flat per-channel mean, the "DC" part, which only responds to brightness and colour.
+
+On retinal grading:
+
+- A randomly initialised stem went from about 0.4% DC to about 8% after training, a 20× increase
+- A trainable stem built with PCA went from 0% to about 4%
+- A frozen stem stayed at 0%
+
+And a few percent of DC weight can dominate what the layer outputs. In one stem, well under 1% of the weight carried almost all of the response.
+
+On breast ultrasound there was no such pull.
+
+My reading of the mechanism:
+
+1. The first layer's gradient is built from input patches (∂L/∂W = Σ δ·xᵀ), and the vast majority of patch variance is brightness. Almost any update is mostly a brightness update.
+2. Brightness lowers the training loss quickly. It's the easy path.
+3. Gradient starvation. Later layers adapt to brightness, part of the loss is gone, and the finer texture signal, where the retinal grades actually live, gets small gradients. It's learnable, just slowly.
+4. The training budget runs out first, and the run settles in the brightness basin.
+
+It isn't classic overfitting: the random-init model fits the training set worse and peaks early. It's a speed imbalance, and it explains why stopping the first layer helps so much here.
+
+Have you ever looked at what your first layer actually learned?
+
+## Sources
+
+- Related work: gradient starvation (Pezeshki et al., NeurIPS 2021); simplicity bias (Shah et al., NeurIPS 2020); critical learning periods (Achille et al., ICLR 2019).

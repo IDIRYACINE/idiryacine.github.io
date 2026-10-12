@@ -1,0 +1,31 @@
+---
+title: 'A shared test suite defines a valid backend'
+abstract: 'In my template, "a valid backend" has a precise definition:'
+date: '2026-10-15'
+---
+
+![A valid backend = passes the suite. One behaviour spec, run against every backend through the same typed client.](/images/articles/architecture/arch-04-conformance.png)
+
+*A valid backend = passes the suite. One behaviour spec, run against every backend through the same typed client.*
+
+It passes the conformance suite.
+
+One behaviour suite, written once against the API contract, runs on every backend through a small driver:
+
+- A client that acts as a given user, or as nobody
+- Fixtures to set up roles, since the API deliberately has no "make me admin" endpoint
+- A fake for the one external API
+
+Every assertion goes through the same typed client the frontend uses. So the tests exercise exactly what the frontend depends on, and nothing it doesn't.
+
+Who can call what. What comes back. How it fails, down to the exact error code.
+
+What it deliberately doesn't test: HTTP headers, multipart framing, idempotency keys. A behaviour that only one transport can express isn't really a behaviour. It's a property of that transport, so it gets tested there.
+
+Why this matters:
+
+- Two implementations can't be kept equal by review. An executable spec can.
+- Adapters can differ inside (a join on one side, a document read on the other) because the suite pins the result, not the implementation.
+- A third backend becomes cheap to trust: write adapters and a driver, then run the suite.
+
+Do you test your implementation, or the contract your users depend on?

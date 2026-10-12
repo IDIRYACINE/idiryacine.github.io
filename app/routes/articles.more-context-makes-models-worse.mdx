@@ -1,0 +1,35 @@
+---
+title: 'More context makes models worse'
+abstract: '"Just give the model more context" is measurably wrong.'
+date: '2026-10-17'
+---
+
+![More context makes models worse. Accuracy as irrelevant facts are added to the prompt (GSM-DC).](/images/articles/ai/ai-05-context-rot.png)
+
+*More context makes models worse. Accuracy as irrelevant facts are added to the prompt (GSM-DC).*
+
+Chroma tested 18 frontier models, keeping task difficulty fixed and changing only the input length.
+
+All 18 got worse.
+
+The counter-intuitive part: models did better when the surrounding text was shuffled noise than when it was coherent, on-topic prose.
+
+Well-written background is close enough in meaning to compete for attention with the thing that actually matters. Noise isn't.
+
+A controlled reasoning benchmark found the same pattern:
+
+GPT-4.1 dropped from 26% to 2% accuracy as irrelevant facts went from 1 to 15.
+
+Context isn't storage. It's an attention budget, and every token you add competes with every token already there.
+
+So the question is never "what could the model usefully know?"
+
+It's "what is the minimum this task needs, and what should I leave out?"
+
+What's the biggest thing you've ever pasted into a prompt "just in case"?
+
+## Sources
+
+- Chroma — "Context Rot: How Increasing Input Tokens Impacts LLM Performance" (Jul 2025, 18 models).
+- Yang et al. — "How Is LLM Reasoning Distracted by Irrelevant Context?" GSM-DC ([arXiv 2505.18761](https://arxiv.org/abs/2505.18761)).
+- Anthropic — "Effective context engineering for AI agents."

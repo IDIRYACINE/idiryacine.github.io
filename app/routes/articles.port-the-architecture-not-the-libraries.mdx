@@ -1,0 +1,36 @@
+---
+title: 'Port the architecture, not the libraries'
+abstract: 'I added a Flutter client to my template, and my first attempt was a mistake.'
+date: '2026-10-28'
+---
+
+![Port the architecture, not the libraries. One TypeScript contract. Each client uses its own idioms on top.](/images/articles/architecture/arch-17-port-the-architecture.png)
+
+*Port the architecture, not the libraries. One TypeScript contract. Each client uses its own idioms on top.*
+
+The first version mirrored the React stack library for library:
+
+- Redux → a Dart Redux port
+- TanStack Query → a Dart clone
+- React hooks → flutter_hooks
+- Zod → a Zod-like Dart library
+
+It worked. It was also fighting the ecosystem at every step: half the packages were pre-1.0 or hadn't been updated in years, and nobody writing Flutter code would recognise the patterns.
+
+So I rewrote the decision:
+
+- State → Bloc
+- Server cache → cached_query
+- Forms → formz
+- Validation → plain Dart validators generated from the shared schemas
+- i18n → slang
+
+What stayed exactly the same is the part that mattered: the contract.
+
+The domain and the API are still written once, in TypeScript. The Dart models, API client, error codes and translations are generated from them. Rename a field on the server, and the Flutter app stops compiling the moment code generation runs.
+
+The lesson: port the architecture, not the libraries.
+
+Keep the boundaries and the single source of truth. Let each platform use its own idioms on top.
+
+Have you ever forced one ecosystem's patterns onto another?

@@ -1,0 +1,31 @@
+---
+title: 'Database or external API, never both'
+abstract: 'One rule in my architecture regularly annoys people, and keeps saving them:'
+date: '2026-10-18'
+---
+
+![Database or external API, never both. Each use case declares the effects of its ports.](/images/articles/architecture/arch-07-db-or-external.png)
+
+*Database or external API, never both. Each use case declares the effects of its ports.*
+
+A use case may touch the database, or call an external API.
+
+Not both.
+
+Every port is marked as either db or external. A use case that mixes the two is rejected by the core layer.
+
+Where it came from: Convex doesn't allow network calls inside a database transaction. A use case with an external call has to run as an "action", outside the transaction.
+
+But the rule turned out to be good design on any backend:
+
+- A transaction that waits on a third-party API holds locks while a stranger's server takes its time
+- A retry can repeat the external call even though the database work rolled back
+- Failures get murky: did the payment go through, or only the row?
+
+When you need both, it's almost always a sign the flow is really two steps. Do the database work, then the external effect, or the other way round, with a clear handoff between them.
+
+Push notifications work exactly like that: the mutation commits, and delivery happens after the commit.
+
+A constraint borrowed from one platform made the design clearer everywhere.
+
+Do you call external APIs inside database transactions?

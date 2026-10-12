@@ -1,0 +1,34 @@
+---
+title: 'One execution kernel for every use case'
+abstract: 'Every use case in my backend runs through one function, about 20 lines long.'
+date: '2026-11-04'
+---
+
+![Core policy and transport-specific steps merge into one ordered chain, then the handler runs, all inside the call's transaction.](/images/articles/architecture-deep-dive/dd-06-middleware-chain.png)
+
+*Core policy and transport-specific steps merge into one ordered chain, then the handler runs, all inside the call's transaction.*
+
+```ts
+execute(useCase, ctx, path, input, steps)
+```
+
+It builds a call object (the kind, the path like 'items.createItem', the contract's metadata, the validated input), sorts the steps by order, and runs them as a chain ending in the handler.
+
+The steps come from two places:
+
+- Core middleware, written once for every backend. Access is order 10: it reads the contract's access rule and stops the call before the handler.
+- Transport middleware, added by one backend. On NestJS, idempotency is order 20: it only exists where HTTP exists.
+
+Both kinds have the same shape, (call, next) =\> Promise, so they mix freely in one sorted list.
+
+What each backend still owns:
+
+- opening the transaction
+- building the context
+- mapping the core's AppError to its own wire error, in exactly one file
+
+So "who may call this" is enforced in one place for both backends, while "replay this request" lives only where it makes sense.
+
+A small, boring execution kernel is what lets everything around it stay generic.
+
+What runs between a request arriving and your handler, and in what order?

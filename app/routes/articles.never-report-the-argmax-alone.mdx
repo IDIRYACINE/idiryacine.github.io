@@ -1,0 +1,31 @@
+---
+title: 'Never report the argmax alone'
+abstract: 'One of my early runs had an AUC of 0.80 and a balanced accuracy of 0.50, which is chance level. Both numbers were correct.'
+date: '2026-10-25'
+---
+
+![A good ranking with a bad default threshold: tune the operating point on validation, then apply it unchanged to test.](/images/articles/ml/ml-c07-operating-point.png)
+
+*A good ranking with a bad default threshold: tune the operating point on validation, then apply it unchanged to test.*
+
+AUC measures ranking: does the model score sick cases above healthy ones? Balanced accuracy is measured at a decision point, and by default that point is the plain argmax.
+
+Under an imbalance-aware loss, the argmax is often not where the model is calibrated. The ranking can be good while every prediction lands on one class. In another run, a "minority-class advantage" vanished the moment the decision point was tuned.
+
+So the rule in my evaluation code is: never report an argmax metric on its own.
+
+What I do instead:
+
+- Tune the operating point on the validation split with logit adjustment: subtract τ·log(prior) from each class score before the argmax. It's Bayes-optimal for balanced error, it works for five-grade retinopathy as well as binary tasks, and for two classes it reduces to a threshold.
+- Apply that τ unchanged to the test split
+- If there's no validation output, the τ chosen on test is labelled ORACLE: an upper bound, not a result
+
+And I report four metrics, following a radiology checklist for imbalanced classification: AUC (ranking), macro AUPRC (less optimistic under imbalance), balanced Brier score (calibration, with each class weighted equally), and balanced accuracy, at both the argmax and the tuned τ.
+
+A single metric at a default threshold can tell you almost anything you want it to.
+
+Which threshold are your reported metrics computed at?
+
+## Sources
+
+- Menon et al., "Long-tail learning via logit adjustment" (ICLR 2021); European Radiology (2024) checklist for imbalanced medical classification.

@@ -1,0 +1,33 @@
+---
+title: 'More agents, more collisions'
+abstract: 'Everyone is moving toward "fleets" of coding agents. The data has a warning.'
+date: '2026-11-02'
+---
+
+![More agents, more collisions. Conflict rate between concurrent agent-written PRs.](/images/articles/ai/ai-14-collisions.png)
+
+*More agents, more collisions. Conflict rate between concurrent agent-written PRs.*
+
+Across 33,000+ agent-written PRs:
+
+- 79% were open at the same time as another agent's PR
+- Pairs from the same agent conflicted 19.8% of the time
+- Pairs from different agents conflicted 41.7% of the time
+
+Mixing tools roughly doubled the collision rate.
+
+And those are lower bounds. Only text conflicts were counted, not build breaks or semantic clashes.
+
+The deeper problem: however many agents you run, everything lands in the same human review queue.
+
+The queue is the constraint, and it doesn't scale with the agents.
+
+More agents running doesn't automatically mean more finished work. Sometimes it just means more collisions waiting for one tired reviewer.
+
+To be fair, the cross-agent sample is small (115 pairs) and comes from open source only. It's enough to question "multi-agent by default", not enough to rule it out.
+
+Are you running several agents in parallel? What breaks first?
+
+## Sources
+
+- Xu, Subramanian, Karthik ([arXiv 2607.04697](https://arxiv.org/abs/2607.04697)). AIDev dataset, 33,596 PRs; also the cross-agent analysis across 116,211 repositories.

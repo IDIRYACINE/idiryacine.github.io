@@ -1,0 +1,35 @@
+---
+title: 'One IPC config, five derived pieces'
+abstract: 'Electron IPC is usually string channels scattered across three processes. In my template, a desktop feature is one typed config.'
+date: '2026-11-13'
+---
+
+![One feature config produces the IPC channels, the preload bridge, the main-process handlers' types, the web adapter and the browser no-op.](/images/articles/architecture-deep-dive/dd-15-electron-bridge.png)
+
+*One feature config produces the IPC channels, the preload bridge, the main-process handlers' types, the web adapter and the browser no-op.*
+
+```ts
+defineFeature<'filesystem', FilesystemMethods>({
+  namespace: 'filesystem',
+  methods: ['pickFolder'],
+  noop: { pickFolder: () => Promise.resolve(null) },
+})
+```
+
+From that single object:
+
+- IPC channel names are derived (filesystem:pickFolder), the only place a channel string is ever produced
+- the preload exposes exactly those methods on window
+- main-process handlers are typed against the same method signatures
+- the web app gets a typed adapter
+- in a plain browser, the feature's own no-op is used instead: here, the folder picker just resolves to null
+
+And the method list is checked against the interface, so adding a method to one without the other doesn't compile.
+
+The no-op is the underrated part. The web app resolves the desktop bridge from dependency injection: inside Electron it gets the live adapter, in a browser it gets the no-op. So no feature ever checks for window.electron, and the same web build runs in both.
+
+The core of the package is framework-free: no Electron, no DOM, no Node. It's just types and naming, which is exactly why it can be shared by the preload, the main process and the web app.
+
+Adding a desktop capability means one config, one handler file and zero channel strings.
+
+How do you keep your Electron IPC from turning into string soup?

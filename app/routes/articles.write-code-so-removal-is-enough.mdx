@@ -1,0 +1,32 @@
+---
+title: 'Write code so removal is enough'
+abstract: 'My project template deletes itself.'
+date: '2026-10-27'
+---
+
+![Write code so removal is enough. A template that deletes what you didn't pick.](/images/articles/architecture/arch-16-removal-is-enough.png)
+
+*Write code so removal is enough. A template that deletes what you didn't pick.*
+
+It ships with three clients (React web, React Native, Flutter), two backends (Convex, NestJS) and two extras (Electron, a VS Code extension).
+
+A scaffold command asks what you want and writes a new project containing only that. The code, config, docs and CI for everything else are gone, not just switched off.
+
+The trick is a rule for writing code in the template:
+
+Write code so removal is enough.
+
+- A file that belongs to one technology is listed in a manifest, and it's removed when that technology isn't picked
+- Lines in shared files carry markers like // @stack convex, or a block from // @stack web | react-native to // @end-stack
+- Backend-specific wiring is one entry per backend in a list, never if (backend === 'convex') ? … : …
+- Each backend's setup lives in its own file
+
+If removing a technology means editing logic, the template is wrong.
+
+If it means deleting lines and files, the template is right.
+
+And it's tested: the scaffolder generates real combinations and fails if any kept file still mentions a removed app.
+
+It's a useful discipline beyond templates too. Code where options are listed side by side is easier to extend, and easier to cut.
+
+Have you ever tried to rip a technology out of a codebase? How long did it take?

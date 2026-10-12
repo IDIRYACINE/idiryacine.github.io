@@ -13,6 +13,10 @@ export function getPost(slug) {
 
   // wordCount is added to the frontmatter at build time in vite.config.js
   const { frontmatter } = modules[file];
+
+  // Scheduled posts stay hidden until their date
+  if (new Date(frontmatter.date) > new Date()) return null;
+
   const readTime = (frontmatter.wordCount / WORDS_PER_MINUTE) * 60 * 1000;
 
   return { slug, frontmatter, timecode: formatTimecode(readTime) };
@@ -21,5 +25,6 @@ export function getPost(slug) {
 export function getPosts() {
   return Object.keys(modules)
     .map(file => getPost(getSlug(file)))
+    .filter(Boolean)
     .sort((a, b) => (a.frontmatter.date < b.frontmatter.date ? 1 : -1));
 }

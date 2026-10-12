@@ -1,0 +1,33 @@
+---
+title: 'A branded id, backend-neutral'
+abstract: 'A Convex document id and a Postgres UUID look nothing alike. In my codebase they''re both valid ItemIds, and neither is ever accepted as an OrganizationId.'
+date: '2026-10-31'
+---
+
+![One helper makes every entity id its own type, without caring how the database mints it.](/images/articles/architecture-deep-dive/dd-02-branded-ids.png)
+
+*One helper makes every entity id its own type, without caring how the database mints it.*
+
+The whole mechanism is three lines of Zod:
+
+```ts
+id = (brand) => z.string().min(1).describe(brand).brand(brand)
+```
+
+Then each entity declares its own:
+
+```ts
+ItemIdSchema = id('ItemId')
+OrganizationIdSchema = id('OrganizationId')
+```
+
+What that buys:
+
+- Pass an ItemId where an OrganizationId is expected and it doesn't compile, even though both are strings at runtime
+- The domain doesn't care how ids are minted. That's the adapter's job: a uuid on Postgres, a document id on Convex.
+- The brand is output-only. Clients send plain strings, and handlers receive branded values after validation.
+- Adapters guard ids they can't parse and return null instead of crashing. A malformed id becomes "not found", not a 500.
+
+It's a tiny pattern with a big effect. A whole class of bugs, mixed-up ids in function arguments, simply can't be written any more.
+
+Do you type your ids, or are they all just string?

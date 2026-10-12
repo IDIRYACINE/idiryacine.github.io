@@ -1,0 +1,35 @@
+---
+title: 'Instruct, don’t describe: rethinking AGENTS.md'
+abstract: 'Your AGENTS.md is probably half dead weight.'
+date: '2026-10-14'
+---
+
+![Instruct, don't describe. What actually works in an AGENTS.md / context file.](/images/articles/ai/ai-06-instruct-dont-describe.png)
+
+*Instruct, don't describe. What actually works in an AGENTS.md / context file.*
+
+Researchers tested repository context files, the "here's how our codebase works" docs we all write for coding agents.
+
+What they found split cleanly in two:
+
+- ✅ Instructions ("do this", "never do that") → followed well
+- ❌ Overviews ("here's the architecture") → no help, and about 20% more inference cost
+
+A second study ran 1,650 sessions and varied file size, where instructions were placed, structure, and contradictions.
+
+None of it had a detectable effect.
+
+Why do overviews fail? Any single task needs only a sliver of the overview. The rest is coherent, on-topic text, and that's exactly the kind of material that distracts a model most.
+
+The rule I took away:
+
+Scope the task. Don't describe the codebase.
+
+If a line in your context file doesn't tell the agent to do or not do something, ask whether it's earning its tokens.
+
+What's in yours?
+
+## Sources
+
+- Gloaguen, Mündler, Müller, Raychev, Vechev — "Evaluating AGENTS.md: Are Repository-Level Context Files Helpful?" ([arXiv 2602.11988](https://arxiv.org/abs/2602.11988)).
+- "Instruction Adherence in Coding Agent Configuration Files" — 1,650 Claude Code sessions, factorial design ([arXiv 2605.10039](https://arxiv.org/abs/2605.10039)).

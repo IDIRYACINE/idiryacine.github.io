@@ -1,0 +1,29 @@
+---
+title: 'A data cache that proves itself'
+abstract: 'My GPU was sitting at about 20% utilisation, waiting for the CPU to decode PNGs.'
+date: '2026-10-29'
+---
+
+![Cache the decoded image, keep augmentation fresh, and take the fast path only when it's provably identical. Otherwise, refuse.](/images/articles/ml/ml-c08-proven-cache.png)
+
+*Cache the decoded image, keep augmentation fresh, and take the fast path only when it's provably identical. Otherwise, refuse.*
+
+On small medical datasets the model is small and fast. The bottleneck is the input pipeline: decoding each image from disk every epoch, then about 10 ms per image of PIL transforms.
+
+Step 1: an in-memory cache.
+
+I cache the decoded image before any transform, so augmentation still runs fresh each epoch. Caching after the transform would freeze augmentation, and every epoch would see identical images.
+
+The platform details matter. On Linux, data-loader workers fork and inherit a preloaded cache for free (copy-on-write). On macOS and Windows they spawn, which pickles the dataset into each worker. Without persistent workers, that's an empty cache every epoch. The code documents both.
+
+Step 2: skip the PIL transform entirely, but only when it's provably a no-op.
+
+If the transform is a full-frame crop at the target size plus flips and normalisation, it collapses to: cached uint8 tensor → float/255 → flip → normalise.
+
+I made that path bit-identical to the original, down to this detail: timm inserts a ColorJitter that changes no pixel but still draws a random permutation per image. So the fast path draws the same permutation at the same point. Otherwise every later flip decision would shift, and the "same" seed would produce different augmentations.
+
+If the pipeline contains anything the proof doesn't cover, like a real random crop, colour jitter or random erasing, the cache refuses, records why, and keeps the slow path.
+
+A speed-up that silently changes the experiment isn't a speed-up. It's a new, undocumented experiment.
+
+What's the bottleneck in your training loop?

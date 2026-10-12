@@ -1,0 +1,31 @@
+---
+title: 'Declarative vs imperative access checks'
+abstract: 'There are two kinds of access check, and my contracts make you pick the right one.'
+date: '2026-11-02'
+---
+
+![When the scope is in the input, declare the rule on the contract. When it only exists after a read, check it in the handler. Same actor either way.](/images/articles/architecture-deep-dive/dd-04-permit.png)
+
+*When the scope is in the input, declare the rule on the contract. When it only exists after a read, check it in the handler. Same actor either way.*
+
+Declarative, when the scope is in the input. Creating an item needs the organisation, and the organisation id arrives with the request:
+
+```ts
+permit(itemsPermissions.create, input, { organization: (i) => i.organizationId })
+```
+
+The scope reader is a function typed against the input schema, and it runs on the validated input. Rename organizationId and the contract stops compiling. With a string like 'organizationId', a rename would silently check nothing.
+
+Imperative, when the scope only exists after a read. Deleting an item: the request carries an item id, and the organisation is only known once the item is loaded:
+
+```ts
+const item = await itemsReader(ctx).findById(input.itemId)
+if (!item) throw itemNotFound()
+await access(ctx).require(itemsPermissions.delete, { organization: item.organizationId })
+```
+
+Both paths go through the same actor, memoised per call, so the user and each scope's roles load once.
+
+And when access is denied, the error carries no detail. Which permission and scope failed goes into a logged cause, never onto the wire. Telling a caller what they lack leaks your policy.
+
+Do your access checks live in one place, or wherever someone remembered them?

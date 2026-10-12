@@ -1,0 +1,35 @@
+---
+title: 'Three kinds of client state, one home each'
+abstract: 'Most frontend state bugs I''ve seen come from state living in two places.'
+date: '2026-10-26'
+---
+
+![Three kinds of state, one home each. Most frontend state bugs come from state living in two places.](/images/articles/architecture/arch-15-three-kinds-of-state.png)
+
+*Three kinds of state, one home each. Most frontend state bugs come from state living in two places.*
+
+In my template, every piece of client state has exactly one home:
+
+1. Server data → the query cache
+
+Never copied into Redux. A copy is a second source of truth that goes stale.
+
+2. UI state → a Redux store per feature
+
+Page, search, filters, selection, open/closed.
+
+3. Things Redux can't hold → React context
+
+Rendered elements, callbacks, live objects.
+
+Why Redux for UI state instead of useState?
+
+- UI state often decides which query runs. With page and search in a store, the query hook can read them without the input component passing them down.
+- Reusable behaviour, not reusable components. Pagination, filters, selection and steppers are slice factories. A feature composes them instead of re-implementing paging in every component.
+- It stays inspectable and testable as plain functions.
+
+And why one store per feature, not one global store?
+
+It's created and destroyed with the feature. Two instances never collide. Deleting a feature removes its state, with no global reducer to clean up.
+
+Where does your server data live: the cache, a global store, or both?

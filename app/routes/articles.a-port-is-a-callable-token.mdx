@@ -1,0 +1,33 @@
+---
+title: 'A port is a callable token'
+abstract: 'In my backend core, a port isn''t just an interface. It''s a function you call with the request context.'
+date: '2026-11-03'
+---
+
+![A port is a callable token: called with the call's context, it finds the backend's adapter, builds it over the transaction and memoises it.](/images/articles/architecture-deep-dive/dd-05-port-tokens.png)
+
+*A port is a callable token: called with the call's context, it finds the backend's adapter, builds it over the transaction and memoises it.*
+
+```ts
+itemsReader(ctx).listByOrganization(orgId)
+```
+
+Under the hood, readPort('items.reader') returns a token that:
+
+- looks up the adapter factory the backend bound for this port in ctx.adapters
+- builds it over this call's transaction
+- memoises it in ctx.memo, so a second call in the same request reuses it
+
+Why a callable token instead of dependency injection?
+
+1. Use cases import the token, not an interface. My architecture rules govern imports, so they apply to ports like any other dependency, and a feature can't reach a port it didn't declare.
+
+2. Read vs write is in the token's type. readPort accepts any context; writePort only accepts a mutation context. A query that reaches for a write port is a type error.
+
+3. Effects are declared. readPort(…, \{ effect: 'external' \}) marks a port that leaves the system, like a third-party API. The binding generator uses that to decide how the use case runs on each backend.
+
+4. No container, no decorators, no runtime reflection. The context is just data built per call.
+
+A good abstraction carries its own rules with it.
+
+How do your use cases reach the database?

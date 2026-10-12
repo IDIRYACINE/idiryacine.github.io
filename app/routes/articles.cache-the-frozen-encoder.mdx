@@ -1,0 +1,33 @@
+---
+title: 'Cache the frozen encoder'
+abstract: 'One question made my text experiments more than a thousand times cheaper: is this computation actually different each epoch?'
+date: '2026-10-31'
+---
+
+![Where a text run's time went before and after caching the frozen encoder's outputs.](/images/articles/ml/ml-c10-frozen-encoder.png)
+
+*Where a text run's time went before and after caching the frozen encoder's outputs.*
+
+In one experiment I trained small classifier heads on top of frozen biomedical language models (BiomedBERT and BioMed-RoBERTa) for symptom-to-diagnosis classification.
+
+I profiled a run. More than 99.9% of the time went to the 110M-parameter encoder, to feed a head with a few thousand parameters.
+
+Then the question: does the encoder's output ever change?
+
+- The encoder is frozen, with no gradient
+- It's pinned to eval mode, so no dropout
+- Text gets no augmentation: no flips, no crops, and word order matters
+
+So every sample maps to exactly the same pooled vector in every epoch of every run. Recomputing it was pure waste.
+
+The fix:
+
+- Run the encoder once per encoder, dataset and split, and store the attention-masked mean-pooled 768-d vectors with their labels
+- Assert that the row order matches the token dataset row for row, so labels and class counts can't drift
+- Behind a flag, the dataset returns the cached vectors and the model skips the encoder. Checkpoints hold only the head.
+
+The experiment is identical up to floating-point noise.
+
+The same trick doesn't apply to the images in that experiment. They're augmented, so their features really do change every epoch.
+
+The best optimisations come from asking what's invariant, not from faster hardware.

@@ -1,0 +1,34 @@
+---
+title: 'Summaries drop exactly what agents need'
+abstract: 'When your coding agent "compacts" a long session, the first thing it forgets is which files it touched.'
+date: '2026-10-26'
+---
+
+![Compaction forgets which files it touched. Can the agent carry on after its context is summarised? Score out of 5.](/images/articles/ai/ai-07-compaction.png)
+
+*Compaction forgets which files it touched. Can the agent carry on after its context is summarised? Score out of 5.*
+
+Factory evaluated compaction on 36,000+ messages from real engineering sessions. They didn't ask whether the summary read well. They asked whether the agent could actually carry on afterwards.
+
+Every vendor's strategy scored ~4.9/5 on following instructions.
+
+Every one scored 2.2–2.5/5 on tracking which files were created, modified or examined.
+
+The reason is almost elegant:
+
+A file path carries almost no meaning. To a summariser, it's a boring string, the first thing to cut.
+
+It's also exactly what the agent needs in order to continue.
+
+Summarisation keeps what reads well and drops what lets the agent keep working.
+
+And you don't notice the loss when it happens. You notice it later, when the agent confidently works from a stale assumption.
+
+My takeaway: don't rely on a summary to carry forward the state of your work. Keep the actual files and diffs somewhere the summariser never touches.
+
+Have you watched an agent lose the plot after a compaction?
+
+## Sources
+
+- Factory — "Evaluating Context Compression for AI Agents" (Dec 2025, n=36,611 production messages). Vendor-produced: treat the ranking as interested, but the weak artifact-trail score was shared by all three vendors, including Factory itself.
+- Anthropic — "Effective context engineering for AI agents" (compaction warning).

@@ -1,0 +1,30 @@
+---
+title: 'Freezing a layer is two speeds, not a lower learning rate'
+abstract: '"Freeze the first layer" sounds like "use a lower learning rate". It isn''t, and I needed four training arms to prove it.'
+date: '2026-10-14'
+---
+
+![Same first layer in all four arms. Only the training speeds change.](/images/articles/ml/ml-c01-two-speeds.png)
+
+*Same first layer in all four arms. Only the training speeds change.*
+
+All four arms use the same first layer, built before training. Only the speeds differ:
+
+- First layer fast, rest fast → about 73 AUC
+- Everything slow (10× lower rate) → about 75
+- First layer slow, rest fast → about 80
+- First layer stopped, rest fast → about 80
+
+What it shows:
+
+- Training the first layer at full speed destroys it. That gap held on every seed.
+- Slowing everything down doesn't fix it. Arm 2 runs its first layer at the same slow rate as arm 3 and is still about 5 points behind.
+- The rest of the network has to stay fast. That's the only difference between arms 2 and 3.
+
+So freezing is two speeds at once: stop, or nearly stop, the first layer, and keep everything else at full speed. No single global learning rate gets there.
+
+On the first layer's rate multiplier, the curve is flat from 0.1× down to a full stop. The cliff sits between 1× and 0.1×.
+
+I also ruled out the boring explanation. A random first layer with everything slowed down scores the same as at full speed. Slowing down buys nothing when there's nothing worth protecting, so the gain isn't a mistuned baseline.
+
+Do you use per-layer learning rates, or one rate for everything?

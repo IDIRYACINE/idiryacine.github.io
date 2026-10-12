@@ -1,0 +1,25 @@
+---
+title: 'Secure-by-default access control'
+abstract: 'In my API, a route with no access rule isn''t public. It requires a signed-in user.'
+date: '2026-10-20'
+---
+
+![Secure by default. Forgetting an access rule fails closed, not open.](/images/articles/architecture/arch-09-secure-by-default.png)
+
+*Secure by default. Forgetting an access rule fails closed, not open.*
+
+Opening a route to everyone has to be written explicitly, so it shows up in the diff during review.
+
+Small decision, big effect: forgetting a rule fails closed instead of open.
+
+Some other access-control choices I'm happy with:
+
+- Permissions are declared once, in the domain. Grants are typed: a typo like "items.delet" doesn't compile.
+- The frontend and the server share one can() function. The button you hide is hidden by the same rule the server enforces, so they can't disagree.
+- Scoped rules are functions typed against the input schema, not field names in strings. Rename organizationId and the rule stops compiling instead of silently checking nothing.
+- When access is denied, the error doesn't say which permission was missing. That detail is logged, never sent. Telling a caller what they lack leaks your policy.
+- "Who did this" always comes from the verified token. Fields like createdBy are never taken from client input.
+
+Security bugs rarely come from rules that are wrong. They come from rules that are missing.
+
+What does your API do when someone forgets the access check?

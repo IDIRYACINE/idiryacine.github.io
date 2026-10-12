@@ -1,0 +1,27 @@
+---
+title: 'GPU augmentation is a different experiment'
+abstract: 'Moving data augmentation to the GPU made training faster. It also meant treating it as a different experiment.'
+date: '2026-10-30'
+---
+
+![Same augmentation distributions, different arithmetic, so a different experiment. Pick one path per dataset and never mix them.](/images/articles/ml/ml-c09-gpu-aug.png)
+
+*Same augmentation distributions, different arithmetic, so a different experiment. Pick one path per dataset and never mix them.*
+
+Once the image cache took decoding off the CPU, augmentation became the next bottleneck. So I re-implemented the pipeline (random resized crop, horizontal flip, colour jitter, normalisation) as one batched operation on the GPU.
+
+It reproduces the same distributions: the exact crop-sampling procedure timm uses, the same flip probability, and torchvision's colour-jitter formulas in a random order per sample.
+
+But it isn't bit-identical. The crop is resampled with grid_sample instead of Pillow, and the colour operations run in float32 instead of Pillow's 8-bit blends.
+
+So the rules, written at the top of the file:
+
+- A GPU-augmented run is a different experiment from a CPU-augmented one
+- Never mix them within a dataset
+- Choose one per dataset before any runs finish, keep it fixed for every arm, and state it in the write-up
+
+There was a bonus I hadn't planned. Every random draw comes from one generator seeded with the run seed and consumed in batch order. So the augmentation at a given seed and batch is identical for every model, and independent of the number of loader workers. The CPU path can't offer that. For paired comparisons across architectures, it's a better experiment than the one it replaced.
+
+Engineering changes are experimental changes. Treat them with the same discipline.
+
+Have you ever compared runs that turned out to use different pipelines?

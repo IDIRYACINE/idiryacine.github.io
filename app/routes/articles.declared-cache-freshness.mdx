@@ -1,0 +1,32 @@
+---
+title: 'Declare cache freshness, don’t hand-write it'
+abstract: 'No feature in my frontend calls invalidateQueries. Ever.'
+date: '2026-10-21'
+---
+
+![Declare freshness, don't hand-write it. No feature calls invalidateQueries. The contract says what reads and writes what.](/images/articles/architecture/arch-10-freshness.png)
+
+*Declare freshness, don't hand-write it. No feature calls invalidateQueries. The contract says what reads and writes what.*
+
+Cache invalidation is declared on the API contract instead:
+
+listItems → reads: [items]
+
+createItem → writes: [items]
+
+deleteItem → writes: [items]
+
+After any mutation succeeds, the client looks at what it writes, finds every query that reads the same thing, and refreshes those. Automatically.
+
+Why this beats hand-written invalidation:
+
+- Hand-written invalidation drifts. Every new query that reads items needs every mutation that writes items updated to match. Someone always forgets one.
+
+With declarations, adding a new query is a one-line change: reads: [items].
+
+- It's a fact about the use case, not about a screen. So it belongs next to the input and output, not inside a component.
+- It absorbs the backend difference. On Convex, queries are live subscriptions, so the refresh has already happened and the invalidation is harmless. On a REST backend, it triggers a refetch. The feature code is identical either way.
+
+Optimistic updates still exist, but as an opt-in layer on top. They don't replace the declared refresh.
+
+Where does cache invalidation live in your frontend?

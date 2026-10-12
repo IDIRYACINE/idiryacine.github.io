@@ -1,0 +1,33 @@
+---
+title: 'Self-discipline is not a control'
+abstract: '"Self-discipline is not a control."'
+date: '2026-10-23'
+---
+
+![Self-discipline is not a control. A blocking hook for AI agents, before the write lands.](/images/articles/architecture/arch-12-self-discipline.png)
+
+*Self-discipline is not a control. A blocking hook for AI agents, before the write lands.*
+
+That line is a comment at the top of one of my repo's AI agent hooks.
+
+Here's the failure it fixes.
+
+My repo has detailed authoring guides ("skills") for each area. The AI coding agent would edit a file without loading the guide. It would reason from the one-line description of the guide instead of the guide itself, then confidently claim an exception the guide doesn't contain.
+
+My first fix was an advisory hook that warned after the edit. The agent dismissed the warnings as false positives.
+
+So now there's a blocking hook that runs before the write:
+
+- The first edit to a governed folder is denied until the agent has actually loaded that area's guide
+- The proof is in the session transcript
+- The denial message tells the agent exactly what to load
+
+Design details that made it work in practice:
+
+- It blocks only the first write per area per session, so it can cost one retry but never wedge editing
+- It fails open on its own errors, so a bug in the hook never blocks real work
+- It only guards areas with non-obvious rules. Mechanical rules have their own checks.
+
+Nudges get ignored, by humans and AIs alike. Gates don't.
+
+How do you make sure your AI agent follows your team's conventions?

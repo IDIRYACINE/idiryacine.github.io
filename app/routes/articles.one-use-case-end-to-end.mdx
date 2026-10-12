@@ -1,0 +1,27 @@
+---
+title: 'One use case, end to end'
+abstract: 'Here''s every line it takes to add "create an item" to my monorepo template, from the API contract to two different backends.'
+date: '2026-10-30'
+---
+
+![One use case: a contract that declares everything a transport needs, one handler over ports, and bindings generated for both backends.](/images/articles/architecture-deep-dive/dd-01-use-case.png)
+
+*One use case: a contract that declares everything a transport needs, one handler over ports, and bindings generated for both backends.*
+
+1. The contract (on the image): input, output, route, plus three pieces of metadata.
+- access: permit(itemsPermissions.create, …), so who may call it
+- idempotent: true, so retries are safe
+- writes: [itemsResource], so which cached data it makes stale
+
+2. The handler, written once:
+- the creator comes from the verified caller, never from client input
+- the write goes through a port: itemsWriter(ctx).insert(…)
+- the rest of the organisation gets notified
+
+3. Everything else is generated: a NestJS route with its transaction and error mapping, a Convex mutation, the typed client, the cache invalidation on every frontend.
+
+What I don't write: a controller, a DTO, an access check, a cache key, a second implementation for the other backend.
+
+When the contract carries the facts, the plumbing can be derived.
+
+How many files does a new endpoint touch in your codebase?

@@ -1,0 +1,33 @@
+---
+title: 'Errors are codes, not messages'
+abstract: 'My backends never send an error message. Only error codes.'
+date: '2026-10-19'
+---
+
+![Errors are codes, not messages. Defined once, thrown once, carried identically, translated once.](/images/articles/architecture/arch-08-errors-as-codes.png)
+
+*Errors are codes, not messages. Defined once, thrown once, carried identically, translated once.*
+
+Every failure is a typed payload:
+
+errors: [\{ code, field?, params? \}]
+
+- It's an array, so one failure can mark several form fields
+- No field means a form-level banner
+- params are typed per code: TOO_MANY_ITEMS must carry \{ max \}
+
+Why codes and not messages?
+
+1. Translation lives in one place. The server never picks a language for an error.
+2. The UI decides where an error goes. Field-bound codes show inline, the rest as a banner, with no per-form wiring.
+3. Tests assert meaning, not wording.
+4. Nothing leaks. Diagnostics go into a cause field that gets logged and never sent.
+
+Two smaller rules I like:
+
+- The HTTP status isn't chosen where the error is thrown. It comes from one table, so the same code means the same status on every backend.
+- Form errors and status errors are separate types. Throwing FORBIDDEN as a form error doesn't compile.
+
+The payoff: adding a new failure means adding a code, a message per language and one test. Every existing form already knows how to display it.
+
+How does your frontend find out what went wrong?

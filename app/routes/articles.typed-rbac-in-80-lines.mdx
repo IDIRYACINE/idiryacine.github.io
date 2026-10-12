@@ -1,0 +1,37 @@
+---
+title: 'Typed RBAC in about 80 lines'
+abstract: 'My access-control model is about 80 lines of TypeScript, and a typo in a permission doesn''t compile.'
+date: '2026-11-01'
+---
+
+![Permissions are declared by the feature that enforces them; grants are typed patterns over what's declared, so a typo is a compile error.](/images/articles/architecture-deep-dive/dd-03-typed-rbac.png)
+
+*Permissions are declared by the feature that enforces them; grants are typed patterns over what's declared, so a typo is a compile error.*
+
+Three pieces:
+
+1. Each feature declares its own permissions.
+
+```ts
+definePermissions('items', ['read', 'create', 'delete'])
+```
+
+- \{ read: 'items.read', create: 'items.create', delete: 'items.delete' \}
+
+2. One access model maps roles to grants, per scope.
+
+Global roles (superadmin, support) count everywhere. Organisation roles (owner, admin, member) count inside an organisation. Grants are patterns: '*', 'items.*', or one permission.
+
+3. One question answers everything: can(model, roles, permission).
+
+The type trick: code generation lists every declared permission and scope. Grants are typed against that list, so:
+
+- 'items.delet' doesn't compile
+- a grant that matches nothing doesn't compile
+- an unknown scope doesn't compile
+
+And because the model lives in the shared domain package, the frontend imports the same can(). The button you hide and the request the server rejects come from one rule.
+
+Adding a new scope, like teams or projects, means one entry in the model plus a resolver for its roles. Nothing else changes.
+
+Where do your permission strings live, and what catches a typo?

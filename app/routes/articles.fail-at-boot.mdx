@@ -1,0 +1,29 @@
+---
+title: 'Fail at boot, with a name'
+abstract: 'A missing environment variable should crash your app at boot, with a name.'
+date: '2026-10-29'
+---
+
+![Fail at boot, with a name. A missing env var should crash at startup — not show up as undefined at 2am.](/images/articles/architecture/arch-18-fail-at-boot.png)
+
+*Fail at boot, with a name. A missing env var should crash at startup — not show up as undefined at 2am.*
+
+Not show up as undefined three function calls deep inside a request at 2am.
+
+How I handle env in my monorepo:
+
+- One source file per environment, for the whole repo (env/.env.development)
+- One schema per app: the web app, the mobile app, each backend
+- A distribute step validates the root file against each schema and writes each app's own env file
+- Those per-app files are generated and gitignored, so nobody ever edits them by hand
+- Each app reads env through one typed accessor. process.env and import.meta.env appear in exactly one module.
+
+What you get:
+
+- A missing or malformed variable fails at startup with an error that names it
+- Variables are routed to apps by prefix, so a backend secret can't accidentally be bundled into the browser build
+- Changing a value means editing one file and re-running one command
+
+It's the least glamorous part of the architecture and probably the one that has saved the most debugging time.
+
+How many .env files does your project have, and are they in sync?

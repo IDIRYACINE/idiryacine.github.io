@@ -1,0 +1,42 @@
+---
+title: 'Review isn’t slow, it’s skipped'
+abstract: '"Code review is the bottleneck for AI code."'
+date: '2026-10-21'
+---
+
+![AI code review isn't slow. It's skipped. Agent-written PRs in popular repos, and what happens to repeat reviewers.](/images/articles/ai/ai-08-review-skipped.png)
+
+*AI code review isn't slow. It's skipped. Agent-written PRs in popular repos, and what happens to repeat reviewers.*
+
+The data says something worse: often there's no review at all.
+
+- 61.4% of agent-written PRs in popular repos had no recorded review activity
+- Of the reviewed ones, only ~10% were reviewed by humans alone
+
+And where humans do keep reviewing, they get habituated.
+
+The researchers followed the same 400 reviewers for seven months:
+
+- approval rate up 14.5 points
+- written comments down 22%
+- time to review up 3.5×
+
+Slower and less careful at the same time. The clock was measuring the queue, not attention.
+
+The same pattern shows up elsewhere:
+
+- Claude Code users approve 93% of permission prompts
+- In hospitals, 90–96% of clinical alerts get overridden
+
+When a human approval becomes routine, it stops being a safeguard.
+
+So be suspicious of any AI metric that goes up and to the right because people are clicking "approve" faster.
+
+How do you keep review meaningful when the volume keeps growing?
+
+## Sources
+
+- Duma et al. — "These Aren't the Reviews You're Looking For" ([arXiv 2605.02273](https://arxiv.org/abs/2605.02273)), 33,596 agentic PRs.
+- Yu et al. — "Habituation at the Gate" ([arXiv 2606.22721](https://arxiv.org/abs/2606.22721)), 400 reviewers, 11,429 reviews.
+- Anthropic — "How we built Claude Code auto mode" (93% approval, "approval fatigue").
+- Clinical alert override figures from a systematic review of decision-support alerts.

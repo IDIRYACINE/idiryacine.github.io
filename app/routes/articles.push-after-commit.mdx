@@ -1,0 +1,28 @@
+---
+title: 'Push notifications after commit'
+abstract: 'Never send a push notification from inside a database transaction.'
+date: '2026-11-06'
+---
+
+![The notification row commits with the business write; delivery happens afterwards, through an outbox on Postgres or a scheduled action on Convex, using one shared delivery function.](/images/articles/architecture-deep-dive/dd-08-push-after-commit.png)
+
+*The notification row commits with the business write; delivery happens afterwards, through an outbox on Postgres or a scheduled action on Convex, using one shared delivery function.*
+
+If the transaction rolls back after the push went out, the user was notified about something that never happened.
+
+In my template, creating an item notifies the rest of the organisation. Here's how delivery works:
+
+1. The use case writes a notification row in the same transaction as the item, with pushedAt = null.
+2. Delivery runs only after commit. A rolled-back write was never visible, so it's never delivered.
+3. The delivery logic itself, deliverPush, is written once in the shared core: send to each device, collect the tokens the provider no longer recognises, count failures worth retrying.
+
+Each backend triggers it in its own idiom:
+
+- NestJS + Postgres: an outbox worker polls undelivered rows with FOR UPDATE SKIP LOCKED, so several API instances can drain it without sending a row twice
+- Convex: the mutation schedules an internal action, which can make network calls, loads the pending notification, delivers it, and settles
+
+Either way, the provider's "invalid token" answers clean up dead devices, and push text is rendered per device in that device's language.
+
+Write the fact in the transaction. Do the side effect after.
+
+Where do your side effects happen relative to your commits?

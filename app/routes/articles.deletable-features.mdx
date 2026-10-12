@@ -1,0 +1,36 @@
+---
+title: 'Can you delete a feature by deleting its folder?'
+abstract: 'My test for a well-structured feature: can I delete it by deleting its folder, and nothing else?'
+date: '2026-10-25'
+---
+
+![Deletable features. A feature never imports a sibling. Lift down, or lift up.](/images/articles/architecture/arch-14-deletable-features.png)
+
+*Deletable features. A feature never imports a sibling. Lift down, or lift up.*
+
+To make that true, one rule: a feature never imports a sibling feature.
+
+So what happens when feature A needs something from feature B? There are only two answers, and they point in opposite directions:
+
+↓ Lift it down
+
+If it's a shared capability, it moves into a shared layer, either a pure core layer or a shared-features layer that may talk to the server.
+
+↑ Lift it up
+
+If it's a combination of A and B, the combination lives in a layer above both, which composes them.
+
+Never sideways.
+
+Why so strict?
+
+A feature that imports a sibling can't be deleted, moved or tested on its own. One change cascades across features. Before long, "small refactor" means touching eight folders.
+
+Two details that keep it honest:
+
+- There's no shared bucket inside the features folder, because that's just sideways imports with extra steps
+- When a feature genuinely depends on another, the dependency is declared, and declared dependencies must be acyclic
+
+Deletability is an underrated quality. If you can't remove something cleanly, you don't really understand where it starts and ends.
+
+Could you delete one of your features in a single commit?

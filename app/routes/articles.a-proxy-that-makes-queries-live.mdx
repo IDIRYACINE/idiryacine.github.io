@@ -1,0 +1,29 @@
+---
+title: 'A Proxy that makes queries live'
+abstract: 'The same useQuery call returns live data on one backend and normal cached data on the other. The feature never knows which.'
+date: '2026-11-09'
+---
+
+![On Convex, a Proxy re-keys every database query as a live subscription. The feature's code is unchanged.](/images/articles/architecture-deep-dive/dd-11-live-proxy.png)
+
+*On Convex, a Proxy re-keys every database query as a live subscription. The feature's code is unchanged.*
+
+Both backends expose the same typed API object: api.items.listItems.queryOptions(\{ input \}). On NestJS, that's a normal HTTP query with TanStack Query caching.
+
+On Convex, queries can be live subscriptions. So the Convex API is the same object, wrapped in a Proxy:
+
+- intercept unit → procedure → queryOptions
+- look up the procedure's runtime kind, generated from the core
+- if it's a database query, re-key it as ['convexQuery', 'items:listItems', input] with staleTime: Infinity
+- anything else (mutations, or queries that call an external API) passes through untouched
+
+That key is exactly what the ConvexQueryClient connected to TanStack Query subscribes to. So useQuery gets pushed updates, with the same call site.
+
+Combined with declared freshness:
+
+- on NestJS, a mutation refreshes every query that reads what it wrote
+- on Convex, the subscription has already updated, so the refresh is a harmless no-op
+
+The package that does this is deliberately React-free. Each app keeps its own small hook, so web and mobile never share one copy of React Query and split its context.
+
+Have you ever used a Proxy to adapt an API without touching its callers?

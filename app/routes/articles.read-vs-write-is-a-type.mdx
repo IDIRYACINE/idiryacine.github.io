@@ -1,0 +1,32 @@
+---
+title: 'Read vs write is a type'
+abstract: 'In my template, a query that tries to write to the database doesn''t compile.'
+date: '2026-10-17'
+---
+
+![A query that writes doesn't compile. Read vs write is a type, backed by the database at runtime.](/images/articles/architecture/arch-06-read-write-type.png)
+
+*A query that writes doesn't compile. Read vs write is a type, backed by the database at runtime.*
+
+Every use case gets a context.
+
+A query gets a read context. A mutation gets a write context.
+
+Write ports accept only the write context. So a query handler calling a write port is a type error, caught in the editor before anything runs.
+
+Then the runtime backs it up:
+
+- On Postgres, queries run in a READ ONLY transaction, through a database type with no insert, update or delete
+- On Convex, queries only ever get a database reader
+
+Why go this far?
+
+Because the guarantee is what makes queries valuable. They're safe to retry, cache and subscribe to precisely because they can't write.
+
+A convention like "please don't write in getters" holds until the first deadline.
+
+A type holds for good.
+
+The general lesson I keep relearning: the cheapest place for a rule to live is the type system. It costs nothing at runtime, gives feedback instantly, and can't be skipped.
+
+What rule in your codebase lives in a README that could live in a type?

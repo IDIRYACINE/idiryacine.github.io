@@ -1,0 +1,27 @@
+---
+title: 'Redux actions with an address'
+abstract: 'What if a page has three paginated lists, all using the same pagination slice? Which one does setPage go to?'
+date: '2026-11-11'
+---
+
+![An action carries a scope path in its meta; scoped reducers peel one segment each until it reaches the one nested slice instance it was meant for.](/images/articles/architecture-deep-dive/dd-13-scoped-actions.png)
+
+*An action carries a scope path in its meta; scoped reducers peel one segment each until it reaches the one nested slice instance it was meant for.*
+
+My answer: actions carry an address.
+
+Every action in my slice factories is created through one prepare function, prepareBase(payload, meta). So any action can carry meta.scope: a path like ['pagination', 'drafts'].
+
+createScopedReducer wraps a generic reducer with a scope key and a shape:
+
+- no scope on the action: not for me, return the state untouched
+- the first segment isn't my key: not for me either
+- otherwise, walk down to the nested state the shape describes, run the generic reducer there with the rest of the path, and write the result back immutably
+
+So one generic pagination slice can live in several places in one store, and each instance only reacts to actions addressed to it. Nobody rewrites the slice, and nobody duplicates it per list.
+
+The nested state type is computed from the shape at the type level, so state.pagination.drafts is typed correctly without a hand-written interface.
+
+It's the same idea as routing a request by URL, applied to Redux actions.
+
+How do you reuse the same piece of state logic twice on one screen?

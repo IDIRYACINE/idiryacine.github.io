@@ -1,0 +1,34 @@
+---
+title: 'A better workflow must be cheaper than reacting'
+abstract: 'Here''s what working with a coding agent actually looks like, according to 74,998 real developer messages:'
+date: '2026-10-25'
+---
+
+![How developers actually use coding agents. 74,998 real messages. The better workflow has to be cheaper than reacting.](/images/articles/ai/ai-11-cheaper-than-reacting.png)
+
+*How developers actually use coding agents. 74,998 real messages. The better workflow has to be cheaper than reacting.*
+
+- Median session: 3 messages
+- 58% of sessions are one-shot
+- 1 in 3 messages is under 50 characters ("fix it", "now the tests")
+- The opening message is about a paragraph. Everything after that is short corrections.
+
+Meanwhile one prompt triggers ~10 agent actions and ~2,400 words of output.
+
+Developers say they "plan before implementing and validate everything." The telemetry says they mostly react.
+
+And honestly, that's rational. Typing "no, use the existing helper" is cheap. Knowing in advance that you need to say it is expensive.
+
+This is where most "better workflow" tools die.
+
+Anything that asks you to write more upfront is asking you to pay the expensive part first. It will lose to "fix it" every time.
+
+If you're building tools for developers, the better workflow has to be cheaper than reacting. Otherwise nobody uses it.
+
+Be honest: how long is your average prompt?
+
+## Sources
+
+- Tang et al. — "Programming by Chat: A Large-Scale Behavioral Analysis of 11,579 Real-World AI-Assisted IDE Sessions" ([arXiv 2604.00436](https://arxiv.org/abs/2604.00436)).
+- Anthropic — "How Claude Code is used in practice" (~400k sessions).
+- Huang et al. — "Professional Software Developers Don't Vibe, They Control" ([arXiv 2512.14012](https://arxiv.org/abs/2512.14012)).

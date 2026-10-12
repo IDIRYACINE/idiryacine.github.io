@@ -1,0 +1,31 @@
+---
+title: 'The trust problem with shared AI memory'
+abstract: '"Shared team memory for AI" is the most attempted idea in collaborative AI. It also tends to fail the same way every time.'
+date: '2026-11-01'
+---
+
+![Why shared AI memory loses trust. Four ways team knowledge bases for AI keep failing.](/images/articles/ai/ai-16-shared-memory.png)
+
+*Why shared AI memory loses trust. Four ways team knowledge bases for AI keep failing.*
+
+I surveyed the products trying to let teams pool what they've worked out with AI. The failure modes kept repeating:
+
+1. Anyone can write → it fills with wrong information → nobody trusts it.
+
+A shared memory everyone can write to soon becomes one nobody trusts.
+
+2. Add a review step → the reviewer becomes the bottleneck → people go back to private notes.
+3. Rely on people remembering to save → it stops the first time someone forgets.
+4. Let it go unmaintained → it's worse than nothing, because it still looks authoritative.
+
+And even when what's in there is true, it may not help. Generic written background measurably cost ~20% more per request with no benefit.
+
+So the real design problem isn't storage. Storage is easy, which is exactly why it gets attempted so often.
+
+The hard part is who can write, how you know where a fact came from, and what keeps it from going stale.
+
+Has your team tried a shared AI knowledge base? Did it last?
+
+## Sources
+
+- My own survey of collaborative-AI products (team memory layers, shared projects, context governance tools). Context-file cost finding: [arXiv 2602.11988](https://arxiv.org/abs/2602.11988).

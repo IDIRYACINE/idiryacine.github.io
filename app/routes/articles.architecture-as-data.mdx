@@ -1,0 +1,34 @@
+---
+title: 'Architecture as data, not a wiki'
+abstract: 'My architecture isn''t documented in a wiki. It''s a file the build reads.'
+date: '2026-10-22'
+---
+
+![Architecture as data. One grammar file per package. Everything else is derived from it.](/images/articles/architecture/arch-11-architecture-as-data.png)
+
+*Architecture as data. One grammar file per package. Everything else is derived from it.*
+
+Each package has a grammar file that declares:
+
+- What kinds of files exist (a .port.ts lives in ports/)
+- Which folders a unit may contain
+- Which layer may depend on which
+- Which npm packages each kind of file may import (the core layer can't import a database, a framework or a transport)
+
+From that one file, the tooling derives:
+
+- ESLint rules
+- A structure check
+- Code generation
+- Scaffolding for new use cases
+- The tables in the docs
+
+Why bother? Because a convention written in prose drifts away from the code. A convention written as data can't.
+
+Changing the architecture means editing the grammar, and lint, generation, scaffolding and docs all follow.
+
+Stale generated code fails CI, so nothing silently diverges.
+
+The honest limit: this only catches mechanical problems, like placement, imports and completeness. Whether something is really one concern, or whether a port is shaped around a use case or around a table, is still a judgement call. That's what reviews are for.
+
+Is your architecture enforced, or just described?

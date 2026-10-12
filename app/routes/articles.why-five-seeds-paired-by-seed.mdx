@@ -1,0 +1,21 @@
+---
+title: 'Why five seeds, paired by seed'
+abstract: 'On small medical datasets, the random seed can move your result more than your architecture does.'
+date: '2026-10-20'
+---
+
+![Illustration: the same five seeds for two models. Unpaired, the clouds overlap. Paired seed by seed, every difference has the same sign.](/images/articles/ml/ml-c05-paired-seeds.png)
+
+*Illustration: the same five seeds for two models. Unpaired, the clouds overlap. Paired seed by seed, every difference has the same sign.*
+
+The seed decides the shuffling, the augmentation draws and the weight initialisation. On a dataset with a few hundred images, that's enough to swing accuracy by more than a point or two. A single run per model is a coin flip dressed up as a benchmark.
+
+How I handle it:
+
+1. Five seeds per configuration (42, 123, 456, 789, 1337). They seed every generator (PyTorch, CUDA, NumPy, Python, the data loader and each loader worker) and are re-applied every epoch, so shuffling, augmentation and initialisation are all functions of the seed.
+2. Pair by seed. Model A at seed 42 is compared with model B at seed 42, on the same data order and the same augmentations. Shared noise cancels out of the difference, which makes a paired test far more sensitive than comparing two means.
+3. Report the spread, not just the mean: mean ± SD over seeds, plus how many seeds each difference wins.
+4. Be honest about small n. With three seeds, a 95% t-interval multiplies the standard error by 4.30. So at n = 3, my rules use a sign count (3 of 3) plus a minimum mean effect, not a p-value.
+5. Watch the variance itself. In one experiment, dynamic convolution doubled the seed spread without improving the mean. You only see that if you run seeds.
+
+How many seeds do you run before you believe a difference?

@@ -1,0 +1,33 @@
+---
+title: 'Race-safe idempotency keys'
+abstract: 'A mobile app on a bad connection taps "Create" and retries. Without care, you get two items.'
+date: '2026-11-05'
+---
+
+![The key is claimed inside the mutation's own transaction: a concurrent retry waits, a completed one replays, a failed one rolls back with its claim.](/images/articles/architecture-deep-dive/dd-07-idempotency.png)
+
+*The key is claimed inside the mutation's own transaction: a concurrent retry waits, a completed one replays, a failed one rolls back with its claim.*
+
+My API supports an Idempotency-Key header on mutations whose contract says idempotent: true. The interesting part is how it stays correct under concurrency.
+
+The trick: claim the key inside the mutation's own transaction.
+
+1. INSERT the key row (actor, procedure, key) ON CONFLICT DO NOTHING.
+2. Claimed it? Run the handler, store the serialised result on the row, and commit both together.
+3. Didn't claim it? Read the stored result:
+
+   → result present: return it, without running anything again
+
+   → no result yet: the first request is still in flight, so answer IDEMPOTENCY_IN_PROGRESS
+
+Why it's race-safe by construction:
+
+- A concurrent retry blocks on the primary key until the first transaction commits, then finds the stored result
+- If the first request fails, its claim rolls back with it, and a retry runs fresh
+- Keys are scoped per actor and per procedure, so one user's key can't replay another's result
+
+No locks to manage, no separate cache, no cleanup job deciding what "in progress" means. The database transaction does the coordination.
+
+It lives in the NestJS backend only, because idempotency keys are an HTTP concern.
+
+How does your API handle a retried POST?

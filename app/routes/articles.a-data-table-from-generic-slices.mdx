@@ -1,0 +1,34 @@
+---
+title: 'A data table from generic slices'
+abstract: 'A full data table in my template, with paging, filters, row selection, column visibility and a filters dialog, costs a feature about 40 lines.'
+date: '2026-11-10'
+---
+
+![A data table's state is one composite of five generic slices; a feature supplies only columns, filters and rows.](/images/articles/architecture-deep-dive/dd-12-table-slice.png)
+
+*A data table's state is one composite of five generic slices; a feature supplies only columns, filters and rows.*
+
+The state is one composite built from generic Redux slice factories:
+
+createTableSlice(\{ name: 'charactersTable' \}) combines:
+
+- createPaginationSlice
+- createFiltersSlice
+- createSelectableSlice
+- createVisibilitySlice
+- createDisclosureSlice (the filters panel)
+
+Every child's action types are prefixed with the table's name, so two tables in one store never answer each other's actions.
+
+The UI side is a reusable block, DataTableProvider plus DataTable, DataTablePagination, DataTableColumnsMenu, DataTableSelectionBar and DataTableFiltersDialog, bound to wherever the composite lives in the feature's store.
+
+The feature supplies only:
+
+- its columns
+- its filter fields and their Zod schema
+- the current page of rows
+- where in its store the table state lives
+
+Reusable behaviour, not reusable components, is the point. The same pagination slice drives an infinite feed elsewhere, and the same factories are shared by the React web and React Native apps.
+
+When you build your next table, what will you copy-paste?

@@ -1,0 +1,37 @@
+---
+title: 'Make drift impossible to express'
+abstract: 'Before I redesigned my template, one entity was defined in five places.'
+date: '2026-10-14'
+---
+
+![Make drift impossible to express. Before: one entity, five hand-kept definitions. After: one source.](/images/articles/architecture/arch-03-drift.png)
+
+*Make drift impossible to express. Before: one entity, five hand-kept definitions. After: one source.*
+
+Backend contracts. Permission files. The users kernel. The frontend's types. The database schema.
+
+And every use case was written twice, once per backend.
+
+The two versions had already drifted:
+
+- One checked membership only, the other used full roles
+- One threw raw strings, the other typed error codes
+- One created a default organisation, the other didn't
+
+Nobody did anything wrong. Nothing could detect the difference, so it grew.
+
+That's when I stopped asking "how do we keep these in sync?"
+
+Discipline doesn't keep two hand-written things equal. Review doesn't either.
+
+The better question: how do we make drift impossible to express?
+
+The answer was structural:
+
+- The domain and every use case are written once
+- Each backend only supplies adapters, and its glue code is generated
+- One behaviour suite judges every backend
+
+The goal isn't to discourage inconsistency. It's to make the inconsistent version fail to compile.
+
+Where is drift quietly growing in your codebase?

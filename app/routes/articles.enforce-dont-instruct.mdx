@@ -1,0 +1,39 @@
+---
+title: 'Enforce, don’t instruct'
+abstract: 'The most reliable way to make an AI agent follow a rule is to stop asking it to.'
+date: '2026-10-28'
+---
+
+![Enforce, don't instruct. Deterministic checks run before an agent's tool calls.](/images/articles/ai/ai-12-enforce.png)
+
+*Enforce, don't instruct. Deterministic checks run before an agent's tool calls.*
+
+A study put deterministic checks in front of an agent's tool calls. They were plain code that verified a rule before any write happened.
+
+Task success: 29.6% → 42.0%.
+
+They reran it on 750 new trials and got the same lift, within 0.1 points.
+
+The interesting part is what the checks caught.
+
+78% of failures were silent: a valid call, an accepted write, no error, and a final state that broke policy.
+
+An agent that relies on error messages can't see that.
+
+A human reading a plausible diff can't either.
+
+A check that runs before the write can.
+
+Two honest limits:
+
+- It only works for rules you can decide mechanically. Judgement calls are out of scope.
+- A check blocks; it doesn't repair. You get a visible stop instead of a silent failure. That's better, but it isn't success.
+
+Meanwhile, fewer than 1% of agent configurations on GitHub declare any permission boundary.
+
+Which of your "please don't" prompt rules could be a hard check instead?
+
+## Sources
+
+- Reddy, Challaram, Basu — "Reason Less, Verify More: Deterministic Gates Recover a Silent Policy-Violation Failure Mode in Tool-Using LLM Agents" ([arXiv 2607.07405](https://arxiv.org/abs/2607.07405)). Domain is airline customer service, not code.
+- Madatha — "A Deterministic Control Plane for LLM Coding Agents" ([arXiv 2606.26924](https://arxiv.org/abs/2606.26924)), 10,008 repos.

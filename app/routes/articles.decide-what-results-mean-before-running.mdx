@@ -1,0 +1,33 @@
+---
+title: 'Decide what results mean before running'
+abstract: 'Before I launch an experiment, I write down what each possible outcome will mean. Then I hold myself to it.'
+date: '2026-10-17'
+---
+
+![Write the decision rules and what each outcome means before the runs start. Then hold yourself to them.](/images/articles/ml/ml-c03-decide-first.png)
+
+*Write the decision rules and what each outcome means before the runs start. Then hold yourself to them.*
+
+For one decisive round of experiments, the rules were fixed in my notes before any run started:
+
+1. Base effect: the new first stage must beat normal training on every seed, per dataset.
+2. The data matters: data-fitted filters must beat random and fixed-basis filters by at least one AUC point on average, on every seed, on most datasets.
+3. Stacking: does a second level pay, under the same thresholds?
+4. Learning rate: the gain counts as a rate artefact if a slower baseline comes within one point.
+
+And the meaning of each branch, also written in advance:
+
+- Rule 2 passes: data-fitted filters are the contribution
+- Rule 2 fails and rule 1 passes: the data-fitted idea is closed, and what stands is the fixed stage itself
+- Either way, this is the last round on this idea. What follows is writing it up.
+
+Two more safeguards:
+
+- Any per-dataset choice, like whether to keep brightness, is made on validation, never on test
+- With three seeds, the t multiplier is 4.30, so the operative test is the sign count plus a mean threshold, not a p-value
+
+Rule 2 failed. So the claim changed, and I reframed the whole piece of work around what actually held.
+
+Without the rules, it would have been very tempting to run one more variant until the fitting looked useful.
+
+Do you decide what counts as success before or after you see the results?

@@ -1,0 +1,29 @@
+---
+title: 'A backend can''t build with a port missing'
+abstract: 'One line of generated TypeScript stops a backend from building if it''s missing an adapter.'
+date: '2026-11-08'
+---
+
+![A generated type that only compiles when every core port has an adapter in this backend, and names the missing one when it doesn't.](/images/articles/architecture-deep-dive/dd-10-every-port-bound.png)
+
+*A generated type that only compiles when every core port has an adapter in this backend, and names the missing one when it doesn't.*
+
+```ts
+type Missing = Exclude<PortNames, BoundAdapterPorts>
+export const everyPortBound: [Missing] extends [never] ? true : { missing: Missing } = true
+```
+
+How it works:
+
+- Code generation emits the list of every port the core declares, and the list of adapters this backend registers
+- Missing is the set difference
+- If nothing is missing, Missing is never, the type is true, and assigning true compiles
+- If something is missing, the type becomes \{ missing: 'items.writer' \}, and assigning true fails, with the port's name right there in the compiler error
+
+Why the square brackets? [Missing] extends [never] stops TypeScript from distributing the conditional over a union. Without them, an empty union collapses the whole check.
+
+What it means day to day: add a port to the core, and both backends fail to compile, each naming exactly the adapter it still needs. You can't ship a backend that would crash at runtime with "no adapter bound".
+
+Then the conformance suite proves the adapters behave the same. Types for completeness, tests for behaviour.
+
+What's the most useful compile-time check you've ever written?

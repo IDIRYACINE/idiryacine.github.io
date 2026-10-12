@@ -1,0 +1,33 @@
+---
+title: 'Two backends prove the seam is real'
+abstract: 'My template runs every feature on two backends that couldn''t be more different.'
+date: '2026-10-13'
+---
+
+![Two backends, one contract. If a feature runs on both without knowing which, the seam is real.](/images/articles/architecture/arch-02-two-backends.png)
+
+*Two backends, one contract. If a feature runs on both without knowing which, the seam is real.*
+
+One is Convex: live, document-based, serverless.
+
+The other is NestJS on Postgres: request/response, relational, self-hosted.
+
+Same features. Same UI. The backend is picked by one environment variable.
+
+Why bother? Not because a project needs two backends. Almost none do.
+
+Because "the backend is a replaceable detail" is something every architecture diagram claims and almost no codebase proves.
+
+If a feature runs identically on both without knowing which one it's talking to, the seams are real.
+
+If it doesn't, they were only ever drawn on a diagram.
+
+Running both turned out to be the most honest architecture test I've found. Every leak shows up straight away:
+
+- a backend type sneaking into the UI
+- an error shape only one side produces
+- logic that quietly lives in one backend and not the other
+
+You don't need to ship two backends. But try building against two once. You'll find out how decoupled your code really is.
+
+What would break first if you swapped your backend tomorrow?

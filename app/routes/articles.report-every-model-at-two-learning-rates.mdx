@@ -1,0 +1,27 @@
+---
+title: 'Report every model at two learning rates'
+abstract: '"Model A beats model B" is often really "learning rate X beats learning rate Y".'
+date: '2026-10-19'
+---
+
+![At one rate per model, a ranking can be an artefact of the rate. Reporting every model at both rates shows which conclusions survive.](/images/articles/ml/ml-c04-two-rates.png)
+
+*At one rate per model, a ranking can be an artefact of the rate. Reporting every model at both rates shows which conclusions survive.*
+
+Small CNNs trained on a few hundred images are very sensitive to the learning rate. Train two architectures at one rate each, and the difference you measure can be the rate rather than the model.
+
+So in my comparisons:
+
+- Every model, baselines included, is trained at two learning rates, and both results appear in every table.
+- The rate with the higher mean validation score is starred and quoted by default. The choice is made on validation, never on test.
+- When a conclusion would change at the other rate, I say so.
+
+For external baselines I go further: each one is run ImageNet-pretrained and from scratch over a learning-rate grid, and reported at its own best rate. And I'm explicit that this is a fair benchmark, not a ceiling.
+
+It cuts both ways. When one of my designs beat a randomly initialised stem on retinal grading, the first thing I checked was a second rate. The gap held at both, so it wasn't a learning-rate artefact. On breast ultrasound, every gap was inside the noise at both rates, and I reported it as such.
+
+And "no extra head beats the bare trunk" is a claim I only make because it held at both rates on every dataset.
+
+It doubles the compute. It also removes the most common way a comparison quietly goes wrong.
+
+How do you make sure your baseline got the same tuning budget as your model?

@@ -1,0 +1,30 @@
+---
+title: 'Declare once, derive everything, verify mechanically'
+abstract: 'I rebuilt my monorepo template around one sentence:'
+date: '2026-10-12'
+---
+
+![Declare once → derive → verify. Every fact has one home. Everything else is imported, generated, or checked.](/images/articles/architecture/arch-01-declare-derive-verify.png)
+
+*Declare once → derive → verify. Every fact has one home. Everything else is imported, generated, or checked.*
+
+Declare once → derive everything → verify mechanically.
+
+Every fact gets exactly one home: an entity, a permission, an error code, a use case.
+
+Everything that depends on that fact is either imported from there or generated from it.
+
+And every seam between layers has a machine check: types, lint rules, a shared test suite.
+
+It sounds abstract until you see what it kills:
+
+- The entity defined in five places
+- The permission check that differs between server and UI
+- The error message that says one thing on one backend and another on the other
+- The cache invalidation someone forgot to update
+
+Most of the strict rules in the repo exist to protect that one sentence. When a rule feels annoying, it usually turns out to be guarding it.
+
+In the next posts I'll go through the patterns that came out of it, one at a time.
+
+How many places is your main entity defined in right now? Count them honestly.

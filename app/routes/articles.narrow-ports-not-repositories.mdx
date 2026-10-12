@@ -1,0 +1,32 @@
+---
+title: 'Narrow ports, not generic repositories'
+abstract: 'I stopped writing generic repositories.'
+date: '2026-10-16'
+---
+
+![Narrow ports, not generic repositories. Put the query in the adapter, where each backend can use its best tool.](/images/articles/architecture/arch-05-narrow-ports.png)
+
+*Narrow ports, not generic repositories. Put the query in the adapter, where each backend can use its best tool.*
+
+The classic pattern, find(where) and save(entity), looks reusable. Across a relational database and a document store, it quietly becomes the worst of both.
+
+It ends up as a lowest common denominator. Then it leaks: callers start composing queries one backend can run efficiently and the other can't.
+
+What I use instead are narrow ports shaped around the use case:
+
+ItemsReader
+
+- listByOrganization(orgId) → newest first
+- findById(id)
+
+That's it. No query builder, no "where".
+
+The query lives in the adapter, so each backend uses its best tool: a join on Postgres, an index on the document store.
+
+Ports speak domain types in and out. Rows and documents are mapped at the edge, so nothing above the adapter ever sees how data is stored.
+
+The cost is real and I accept it: every port needs one adapter per backend.
+
+But that repetition is mechanical, small, and checked by the shared test suite. That's the healthy kind of repetition. The unhealthy kind is business logic copied into two places.
+
+Generic repository or narrow ports: which side are you on?

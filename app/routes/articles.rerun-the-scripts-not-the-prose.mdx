@@ -1,0 +1,29 @@
+---
+title: 'Re-run the scripts, not the prose'
+abstract: 'No number in my write-ups is typed by hand.'
+date: '2026-11-08'
+---
+
+![Runs → scripts → every table and figure. No number is copied by hand.](/images/articles/ml/ml-c11-generated-tables.png)
+
+*Runs → scripts → every table and figure. No number is copied by hand.*
+
+The rule I follow: every table and every figure is generated. When runs change, re-run the scripts, not the prose.
+
+How it works:
+
+- Each training run writes its arguments, per-epoch metrics and test confusion matrix to its own folder
+- One script reads the whole output tree and builds every table: means, standard deviations, paired differences, sign counts, corrected tests
+- Another builds every figure from the same runs, plus the architecture and efficiency tables from the model as actually built
+- Model names come from macros, so a rename happens in one place
+
+Why it matters:
+
+1. No transcription errors. With hundreds of runs behind one set of results, copying numbers by hand guarantees mistakes.
+2. Late results fold in for free. When the last seeds of a long run finished after the text was drafted, re-running the table script updated every table, with no other change.
+3. The write-up can't drift from the evidence. If a run is fixed or added, the numbers move with it, including in the places nobody remembers to check.
+4. Anyone, including future me, can trace any number back to the runs that produced it.
+
+It's the same principle as infrastructure as code: if a result matters, it should be reproducible from the source, not from memory.
+
+How do the numbers get from your experiments into your reports?

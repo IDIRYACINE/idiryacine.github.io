@@ -1,0 +1,33 @@
+---
+title: 'One rule, three gates'
+abstract: 'In my repo, the same import rule is enforced in three places from one definition.'
+date: '2026-10-24'
+---
+
+![One rule, three gates. Import across folders with an alias, never ../../ — defined once.](/images/articles/architecture/arch-13-one-rule-three-gates.png)
+
+*One rule, three gates. Import across folders with an alias, never ../../ — defined once.*
+
+The rule is simple: import across folders with an alias (@/features/...), never with ../../ relative paths.
+
+It's defined once, in one file. That file drives:
+
+1. ESLint, so the editor flags it
+2. A blocking hook that denies the AI agent's write before the file lands
+3. Pre-commit checks, so nothing slips into git
+
+The AI agent, the editor and CI all reject the same import, with the same reason.
+
+Why it matters more now:
+
+A big share of the code in a repo might be written by an agent. If your rules only live in review comments, the agent will cheerfully break them a hundred times a day, and someone has to catch each one.
+
+If a rule can be checked mechanically, check it mechanically, everywhere code gets written:
+
+- Before the write, for agents
+- In the editor, for humans
+- At commit and in CI, for everyone
+
+And keep a single definition, so the three can never disagree.
+
+Which of your team's review comments could be a lint rule instead?

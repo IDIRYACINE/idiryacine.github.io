@@ -1,0 +1,28 @@
+---
+title: 'A test that keeps translations honest'
+abstract: 'My error messages exist in three languages, and a test fails if any translation uses the wrong placeholder.'
+date: '2026-11-12'
+---
+
+![Error params are typed per code, and a test checks that every locale's message uses exactly those placeholders.](/images/articles/architecture-deep-dive/dd-14-i18n-test.png)
+
+*Error params are typed per code, and a test checks that every locale's message uses exactly those placeholders.*
+
+The setup:
+
+- Each error code declares its params in the domain. TOO_MANY_ITEMS carries \{ max \}. FORBIDDEN carries nothing, on purpose, because naming the missing permission would leak policy.
+- Throwing an error with the wrong params doesn't compile.
+- Translations live in one package, per locale: "Must be at least \{\{min\}\} characters".
+
+The test walks every error code in every locale:
+
+1. Every code resolves to a message, so no missing translations
+2. The \{\{placeholders\}\} in each message are exactly the params the type declares: no more, no fewer
+
+So when someone adds \{ max \} to a code but forgets to use it in the Arabic message, or a translator renames \{\{min\}\} to \{\{minimum\}\}, CI fails with the locale, the code and both sets of params.
+
+It's a tiny test, around 20 lines, guarding the seam between two worlds that usually drift apart: types written by developers and strings written by translators.
+
+Bonus: since the server only ever sends codes, never messages, every client renders errors in the user's own language from the same table.
+
+What keeps your translations in sync with your code?

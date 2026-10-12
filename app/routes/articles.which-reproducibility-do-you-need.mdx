@@ -1,0 +1,29 @@
+---
+title: 'Which reproducibility does your claim need?'
+abstract: 'I deliberately turned off bit-exact reproducibility in my training code. Here''s why that was the rigorous choice.'
+date: '2026-10-21'
+---
+
+![Two sources of run-to-run variation, on a log scale. The one that bit-exact determinism removes is about a million times smaller than the one the reported numbers already include.](/images/articles/ml/ml-c06-noise-scales.png)
+
+*Two sources of run-to-run variation, on a log scale. The one that bit-exact determinism removes is about a million times smaller than the one the reported numbers already include.*
+
+PyTorch gives you a trade-off:
+
+- cudnn.deterministic = True: same seed, same bits, every run. Slower.
+- cudnn.benchmark = True: cuDNN times several convolution algorithms and picks the fastest. Faster, but the pick can vary between runs, so two runs at the same seed can differ in the low bits.
+
+I'd started with full determinism. Then I asked what my results actually claim.
+
+They never claim single-seed reproducibility. Every number is a mean ± standard deviation over several seeds, and that seed spread is around ±1.6 accuracy points. The cuDNN algorithm jitter is floating-point noise, around 1e-6, about a million times smaller. It can't move a reported number.
+
+So determinism was buying a property my experiments don't use, at a real cost in training time. I switched autotuning on, and wrote the reasoning into the code next to the flag, including how to switch it back if a future use needs bit-exact runs.
+
+What I kept is the determinism that does matter:
+
+- Data order, augmentation and dropout stay seeded, re-applied each epoch
+- Each data-loader worker is seeded from the main seed. Without that, worker RNG comes from the OS, and data order varies between runs even with a fixed seed. That bug is easy to miss.
+
+Rigour isn't maximising every guarantee. It's knowing which guarantee your claim depends on, and protecting that one.
+
+Do you know which kind of reproducibility your results need?
